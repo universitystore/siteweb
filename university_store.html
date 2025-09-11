@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎓 University Store – Ton style, ta technologie</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .admin-btn {
+            background: #667eea;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .admin-btn:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+            min-height: 100vh;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            background: white;
+            color: #667eea;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        /* Products Section */
+        .products {
+            background: white;
+            padding: 4rem 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #f0f0f0;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .product-image {
+            height: 200px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .product-description {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .order-now {
+            width: 100%;
+            padding: 0.8rem;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .order-now:hover {
+            background: #5a6fd8;
+        }
+
+        /* Footer */
+        .footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .footer-info {
+            margin-bottom: 1rem;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80%;
+            overflow-y: auto;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: black;
+        }
+
+        /* Login Form */
+        .login-form {
+            text-align: center;
+        }
+
+        .login-form h3 {
+            margin-bottom: 2rem;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #f0f0f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .submit-btn {
+            background: #667eea;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background: #5a6fd8;
+        }
+
+        /* Dashboard Styles */
+        .dashboard {
+            display: none;
+            background: white;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .dashboard.active {
+            display: block;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .dashboard-nav {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .dash-nav-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .dash-nav-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .back-btn {
+            background: #666;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .dashboard-section {
+            display: none;
+        }
+
+        .dashboard-section.active {
+            display: block;
+        }
+
+        .add-product-form, .orders-section {
+            background: #f9f9f9;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .products-list {
+            background: white;
+            border-radius: 10px;
+            padding: 1rem;
+        }
+
+        .product-item, .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .order-item {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            align-items: center;
+        }
+
+        .order-details {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 5px;
+            width: 100%;
+            margin: 0.5rem 0;
+        }
+
+        .order-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .delete-btn, .finalize-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .delete-btn {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background: #c0392b;
+        }
+
+        .finalize-btn {
+            background: #27ae60;
+            color: white;
+        }
+
+        .finalize-btn:hover {
+            background: #229954;
+        }
+
+        .image-preview {
+            max-width: 100px;
+            max-height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-top: 0.5rem;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .success-message {
+            color: #27ae60;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 10% auto;
+            }
+
+            .dashboard-nav {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">🎓 University Store</div>
+            <ul class="nav-links">
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#produits">Produits</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="admin-btn" onclick="showLoginModal()">Log in</button>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>🎓 University Store</h1>
+            <p>Ton style, ta technologie. Découvrez notre collection d'habillement homme tendance et d'accessoires électroniques pratiques. Qualité garantie – Prix étudiés pour les étudiants algériens.</p>
+            <button class="cta-button" onclick="document.getElementById('produits').scrollIntoView()">
+                Découvrir nos produits
+            </button>
+        </section>
+
+        <!-- Products Section -->
+        <section class="products" id="produits">
+            <div class="container">
+                <h2 class="section-title">Nos Produits</h2>
+                <div class="product-grid" id="productGrid">
+                    <!-- Les produits seront ajoutés dynamiquement -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-info">
+            <p>📍 Disponible en Algérie | 🚚 Livraison rapide</p>
+            <p>✨ Qualité garantie – Prix étudiés</p>
+            <p>&copy; 2024 University Store. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLoginModal()">&times;</span>
+            <div class="login-form">
+                <h3>Log in</h3>
+                <div class="form-group">
+                    <label for="username">Nom d'utilisateur</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button class="submit-btn" onclick="login()">Se connecter</button>
+                <div id="loginError" class="error-message"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Modal -->
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeOrderModal()">&times;</span>
+            <div id="orderForm">
+                <h3>📦 Passer une commande</h3>
+                <form id="orderFormElement">
+                    <div class="form-group">
+                        <label for="orderName">Nom</label>
+                        <input type="text" id="orderName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="orderPrenom">Prénom</label>
+                        <input type="text" id="orderPrenom" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="orderPhone">Numéro de téléphone</label>
+                        <input type="tel" id="orderPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="orderWilaya">Wilaya</label>
+                        <select id="orderWilaya" required onchange="updateCommunes()">
+                            <option value="">Sélectionner une wilaya</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="orderCommune">Commune</label>
+                        <select id="orderCommune" required>
+                            <option value="">Sélectionner une commune</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="submit-btn">Confirmer la commande</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div class="dashboard" id="dashboard">
+        <div class="dashboard-header">
+            <h2>🎛️ Dashboard Admin</h2>
+            <button class="back-btn" onclick="logout()">Déconnexion</button>
+        </div>
+
+        <div class="dashboard-nav">
+            <button class="dash-nav-btn active" onclick="showDashSection('products')">Produits</button>
+            <button class="dash-nav-btn" onclick="showDashSection('orders')">Commandes</button>
+        </div>
+
+        <!-- Products Section -->
+        <div class="dashboard-section active" id="productsSection">
+            <div class="add-product-form">
+                <h3>Ajouter un nouveau produit</h3>
+                <form id="addProductForm">
+                    <div class="form-group">
+                        <label for="productName">Nom du produit</label>
+                        <input type="text" id="productName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="productPrice">Prix (DZD)</label>
+                        <input type="number" id="productPrice" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="productCategory">Catégorie</label>
+                        <select id="productCategory" required>
+                            <option value="">Sélectionner une catégorie</option>
+                            <option value="habillement">👔 Habillement homme</option>
+                            <option value="electronique">🎧 Accessoires électroniques</option>
+                            <option value="accessoires">✨ Accessoires</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="productDescription">Description</label>
+                        <textarea id="productDescription" rows="3" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="productEmoji">Emoji (optionnel)</label>
+                        <input type="text" id="productEmoji" placeholder="Ex: 👔, 🎧, ⌚">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productImage">Image du produit</label>
+                        <input type="file" id="productImage" accept="image/*" onchange="previewImage()">
+                        <img id="imagePreview" class="image-preview" style="display: none;">
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Ajouter le produit</button>
+                </form>
+            </div>
+
+            <div class="products-list">
+                <h3>Produits existants</h3>
+                <div id="productsList"></div>
+            </div>
+        </div>
+
+        <!-- Orders Section -->
+        <div class="dashboard-section" id="ordersSection">
+            <div class="orders-section">
+                <h3>Commandes récentes</h3>
+                <div id="ordersList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Données des produits stockées en mémoire
+        let products = [
+            {
+                id: 1,
+                name: "Chemise Oxford Premium",
+                price: 2500,
+                category: "habillement",
+                description: "Chemise élégante en coton, parfaite pour les cours et les événements universitaires",
+                emoji: "👔",
+                image: null
+            },
+            {
+                id: 2,
+                name: "Écouteurs Bluetooth Sans Fil",
+                price: 3200,
+                category: "electronique",
+                description: "Son de haute qualité pour tes études et ta musique préférée",
+                emoji: "🎧",
+                image: null
+            },
+            {
+                id: 3,
+                name: "Montre Connectée",
+                price: 4500,
+                category: "electronique",
+                description: "Reste connecté avec style, notifications et suivi d'activité",
+                emoji: "⌚",
+                image: null
+            },
+            {
+                id: 4,
+                name: "Sac à Dos Universitaire",
+                price: 1800,
+                category: "accessoires",
+                description: "Sac résistant avec compartiment laptop, idéal pour les étudiants",
+                emoji: "🎒",
+                image: null
+            },
+            {
+                id: 5,
+                name: "Polo Casual Moderne",
+                price: 2200,
+                category: "habillement",
+                description: "Confort et style décontracté pour le campus",
+                emoji: "👕",
+                image: null
+            },
+            {
+                id: 6,
+                name: "Powerbank 20000mAh",
+                price: 2800,
+                category: "electronique",
+                description: "Ne reste jamais à court de batterie pendant tes longues journées d'étude",
+                emoji: "🔋",
+                image: null
+            }
+        ];
+
+        let orders = [];
+        let nextId = 7;
+        let nextOrderId = 1;
+        let currentOrderProduct = null;
+
+        // Données des wilayas et communes d'Algérie
+        const wilayasData = {
+            "01": { name: "Adrar", communes: ["Adrar", "Tamest", "Charouine", "Reggane", "In Salah"] },
+            "02": { name: "Chlef", communes: ["Chlef", "Ténès", "El Karimia", "Dahra", "Boukadir"] },
+            "03": { name: "Laghouat", communes: ["Laghouat", "Aflou", "Ksar El Hirane", "Hassi R'Mel", "Ain Madhi"] },
+            "04": { name: "Oum El Bouaghi", communes: ["Oum El Bouaghi", "Ain Beida", "Ain M'Lila", "Souk Ahras", "Meskiana"] },
+            "05": { name: "Batna", communes: ["Batna", "Barika", "Arris", "Biskra", "Ain Touta"] },
+            "06": { name: "Béjaïa", communes: ["Béjaïa", "Akbou", "Kherrata", "Sidi Aich", "Amizour", "Feraoun"] },
+            "07": { name: "Biskra", communes: ["Biskra", "Tolga", "Ouled Djellal", "Sidi Okba", "El Kantara"] },
+            "08": { name: "Béchar", communes: ["Béchar", "Kenadsa", "Abadla", "Beni Ounif", "Tabelbala"] },
+            "09": { name: "Blida", communes: ["Blida", "Boufarik", "Larbaâ", "Bouinan", "Soumaa"] },
+            "10": { name: "Bouira", communes: ["Bouira", "Lakhdaria", "M'Chedallah", "Souk El Khemis", "Kadiria"] },
+            "11": { name: "Tamanrasset", communes: ["Tamanrasset", "In Guezzam", "In Salah", "Tin Zaouatine", "Idles"] },
+            "12": { name: "Tébessa", communes: ["Tébessa", "Cheria", "El Aouinet", "Bir El Ater", "Négrine"] },
+            "13": { name: "Tlemcen", communes: ["Tlemcen", "Maghnia", "Sebdou", "Ghazaouet", "Remchi"] },
+            "14": { name: "Tiaret", communes: ["Tiaret", "Sougueur", "Mahdia", "Frenda", "Ain Deheb"] },
+            "15": { name: "Tizi Ouzou", communes: ["Tizi Ouzou", "Azazga", "Azeffoun", "Tigzirt", "Draa Ben Khedda"] },
+            "16": { name: "Alger", communes: ["Alger Centre", "Bab El Oued", "Casbah", "El Madania", "Sidi M'Hamed", "Hussein Dey", "Kouba", "Bir Mourad Raïs"] },
+            "17": { name: "Djelfa", communes: ["Djelfa", "Messaad", "Ain Oussera", "Birine", "Hassi Bahbah"] },
+            "18": { name: "Jijel", communes: ["Jijel", "Ferdjioua", "Mila", "El Aouana", "Ziama Mansouria"] },
+            "19": { name: "Sétif", communes: ["Sétif", "El Eulma", "Ain Azel", "Bougaa", "Hammam Guergour"] },
+            "20": { name: "Saïda", communes: ["Saïda", "Balloul", "Ouled Brahim", "Sidi Boubekeur", "El Hassasna"] },
+            "21": { name: "Skikda", communes: ["Skikda", "Collo", "Azzaba", "El Harrouch", "Stora"] },
+            "22": { name: "Sidi Bel Abbès", communes: ["Sidi Bel Abbès", "Telagh", "Ben Badis", "Tessala", "Mostefa Ben Brahim"] },
+            "23": { name: "Annaba", communes: ["Annaba", "El Hadjar", "Berrahal", "El Bouni", "Sidi Amar"] },
+            "24": { name: "Guelma", communes: ["Guelma", "Bouchegouf", "Hammam Debagh", "Oued Zenati", "Heliopolis"] },
+            "25": { name: "Constantine", communes: ["Constantine", "El Khroub", "Ain Smara", "Didouche Mourad", "Zighoud Youcef"] },
+            "26": { name: "Médéa", communes: ["Médéa", "Berrouaghia", "Tablat", "Ouzera", "Ksar El Boukhari"] },
+            "27": { name: "Mostaganem", communes: ["Mostaganem", "Relizane", "Ain Tedeles", "Hassi Mameche", "Stidia"] },
+            "28": { name: "M'Sila", communes: ["M'Sila", "Bou Saada", "Sidi Aissa", "Magra", "Berhoum"] },
+            "29": { name: "Mascara", communes: ["Mascara", "Sig", "Mohammadia", "Tighennif", "Ghriss"] },
+            "30": { name: "Ouargla", communes: ["Ouargla", "Touggourt", "Hassi Messaoud", "Temacine", "N'Goussa"] },
+            "31": { name: "Oran", communes: ["Oran", "Bir El Djir", "Es Sénia", "Gdyel", "Ain Turk"] },
+            "32": { name: "El Bayadh", communes: ["El Bayadh", "Rogassa", "Stitten", "Brezina", "Boualem"] },
+            "33": { name: "Illizi", communes: ["Illizi", "Djanet", "In Amenas", "Bordj Omar Driss", "Debdeb"] },
+            "34": { name: "Bordj Bou Arréridj", communes: ["Bordj Bou Arréridj", "Ras El Oued", "Bordj Ghdir", "El M'Hir", "Mansoura"] },
+            "35": { name: "Boumerdès", communes: ["Boumerdès", "Dellys", "Naciria", "Khemis El Khechna", "Boudouaou"] },
+            "36": { name: "El Tarf", communes: ["El Tarf", "El Kala", "Bouhadjar", "Ben M'Hidi", "Boutheldja"] },
+            "37": { name: "Tindouf", communes: ["Tindouf", "Oum El Assel", "Hassi Khenig"] },
+            "38": { name: "Tissemsilt", communes: ["Tissemsilt", "Theniet El Had", "Bordj Bou Naama", "Lazharia", "Khemisti"] },
+            "39": { name: "El Oued", communes: ["El Oued", "Robbah", "Guemar", "Reguiba", "Still"] },
+            "40": { name: "Khenchela", communes: ["Khenchela", "Kais", "Baghai", "El Hamma", "Ensigha"] },
+            "41": { name: "Souk Ahras", communes: ["Souk Ahras", "Sedrata", "M'Daourouch", "Bir Bouhouche", "Taoura"] },
+            "42": { name: "Tipaza", communes: ["Tipaza", "Cherchell", "Menaceur", "Ahmer El Ain", "Bouharoun"] },
+            "43": { name: "Mila", communes: ["Mila", "Ferdjioua", "Chelghoum Laid", "Oued Athmania", "Grarem Gouga"] },
+            "44": { name: "Ain Defla", communes: ["Ain Defla", "Khemis Miliana", "El Attaf", "Boumedfaa", "Djelida"] },
+            "45": { name: "Naâma", communes: ["Naâma", "Mecheria", "Ain Sefra", "Tiout", "Sfissifa"] },
+            "46": { name: "Ain Témouchent", communes: ["Ain Témouchent", "Hammam Bou Hadjar", "Beni Saf", "El Malah", "Ouled Boudjemaa"] },
+            "47": { name: "Ghardaïa", communes: ["Ghardaïa", "El Menia", "Berriane", "Metlili", "El Atteuf"] },
+            "48": { name: "Relizane", communes: ["Relizane", "Mazouna", "Oued Rhiou", "Yellel", "Sidi M'Hamed Ben Ali"] }
+        };
+
+        // Fonctions d'authentification
+        function showLoginModal() {
+            document.getElementById('loginModal').style.display = 'block';
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+            document.getElementById('loginError').textContent = '';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        }
+
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username === 'younes' && password === 'Its.that.person.7') {
+                closeLoginModal();
+                showDashboard();
+            } else {
+                document.getElementById('loginError').textContent = 'Nom d\'utilisateur ou mot de passe incorrect';
+            }
+        }
+
+        function logout() {
+            hideDashboard();
+        }
+
+        // Fonctions du dashboard
+        function showDashboard() {
+            const mainContent = document.getElementById('mainContent');
+            const dashboard = document.getElementById('dashboard');
+            const header = document.querySelector('.header');
+            const footer = document.querySelector('.footer');
+
+            dashboard.classList.add('active');
+            mainContent.style.display = 'none';
+            header.style.display = 'none';
+            footer.style.display = 'none';
+            displayProductsList();
+            displayOrdersList();
+        }
+
+        function hideDashboard() {
+            const mainContent = document.getElementById('mainContent');
+            const dashboard = document.getElementById('dashboard');
+            const header = document.querySelector('.header');
+            const footer = document.querySelector('.footer');
+
+            dashboard.classList.remove('active');
+            mainContent.style.display = 'block';
+            header.style.display = 'block';
+            footer.style.display = 'block';
+        }
+
+        function showDashSection(section) {
+            // Cacher toutes les sections
+            document.querySelectorAll('.dashboard-section').forEach(sec => {
+                sec.classList.remove('active');
+            });
+            
+            // Désactiver tous les boutons de navigation
+            document.querySelectorAll('.dash-nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Afficher la section demandée
+            document.getElementById(section + 'Section').classList.add('active');
+            
+            // Activer le bouton correspondant
+            event.target.classList.add('active');
+        }
+
+        // Fonctions pour les produits
+        function displayProducts() {
+            const productGrid = document.getElementById('productGrid');
+            productGrid.innerHTML = '';
+
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                
+                const imageContent = product.image 
+                    ? `<img src="${product.image}" alt="${product.name}">`
+                    : (product.emoji || '📦');
+
+                productCard.innerHTML = `
+                    <div class="product-image">${imageContent}</div>
+                    <div class="product-info">
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-price">${product.price.toLocaleString()} DZD</div>
+                        <div class="product-description">${product.description}</div>
+                        <button class="order-now" onclick="openOrderModal(${product.id})">Commander maintenant</button>
+                    </div>
+                `;
+                productGrid.appendChild(productCard);
+            });
+        }
+
+        function displayProductsList() {
+            const productsList = document.getElementById('productsList');
+            productsList.innerHTML = '';
+
+            products.forEach(product => {
+                const productItem = document.createElement('div');
+                productItem.className = 'product-item';
+                productItem.innerHTML = `
+                    <div>
+                        <strong>${product.emoji || '📦'} ${product.name}</strong>
+                        <br>
+                        <small>${product.price.toLocaleString()} DZD - ${product.category}</small>
+                    </div>
+                    <button class="delete-btn" onclick="deleteProduct(${product.id})">Supprimer</button>
+                `;
+                productsList.appendChild(productItem);
+            });
+        }
+
+        function previewImage() {
+            const fileInput = document.getElementById('productImage');
+            const preview = document.getElementById('imagePreview');
+            const file = fileInput.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                preview.style.display = 'none';
+            }
+        }
+
+        // Ajouter un produit
+        document.getElementById('addProductForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('productName').value;
+            const price = parseInt(document.getElementById('productPrice').value);
+            const category = document.getElementById('productCategory').value;
+            const description = document.getElementById('productDescription').value;
+            const emoji = document.getElementById('productEmoji').value || '📦';
+            const imageFile = document.getElementById('productImage').files[0];
+
+            let imageDataURL = null;
+            
+            if (imageFile) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imageDataURL = e.target.result;
+                    
+                    const newProduct = {
+                        id: nextId++,
+                        name: name,
+                        price: price,
+                        category: category,
+                        description: description,
+                        emoji: emoji,
+                        image: imageDataURL
+                    };
+
+                    products.push(newProduct);
+                    displayProducts();
+                    displayProductsList();
+                    
+                    // Reset form
+                    document.getElementById('addProductForm').reset();
+                    document.getElementById('imagePreview').style.display = 'none';
+                    
+                    alert('Produit ajouté avec succès !');
+                };
+                reader.readAsDataURL(imageFile);
+            } else {
+                const newProduct = {
+                    id: nextId++,
+                    name: name,
+                    price: price,
+                    category: category,
+                    description: description,
+                    emoji: emoji,
+                    image: null
+                };
+
+                products.push(newProduct);
+                displayProducts();
+                displayProductsList();
+                
+                // Reset form
+                this.reset();
+                document.getElementById('imagePreview').style.display = 'none';
+                
+                alert('Produit ajouté avec succès !');
+            }
+        });
+
+        // Supprimer un produit
+        function deleteProduct(id) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer ce produit ?')) {
+                products = products.filter(product => product.id !== id);
+                displayProducts();
+                displayProductsList();
+            }
+        }
+
+        // Fonctions pour les commandes
+        function loadWilayas() {
+            const wilayaSelect = document.getElementById('orderWilaya');
+            wilayaSelect.innerHTML = '<option value="">Sélectionner une wilaya</option>';
+            
+            Object.keys(wilayasData).forEach(code => {
+                const option = document.createElement('option');
+                option.value = code;
+                option.textContent = `${code} - ${wilayasData[code].name}`;
+                wilayaSelect.appendChild(option);
+            });
+        }
+
+        function updateCommunes() {
+            const wilayaCode = document.getElementById('orderWilaya').value;
+            const communeSelect = document.getElementById('orderCommune');
+            
+            communeSelect.innerHTML = '<option value="">Sélectionner une commune</option>';
+            
+            if (wilayaCode && wilayasData[wilayaCode]) {
+                wilayasData[wilayaCode].communes.forEach(commune => {
+                    const option = document.createElement('option');
+                    option.value = commune;
+                    option.textContent = commune;
+                    communeSelect.appendChild(option);
+                });
+            }
+        }
+
+        function openOrderModal(productId) {
+            currentOrderProduct = products.find(p => p.id === productId);
+            if (currentOrderProduct) {
+                document.getElementById('orderModal').style.display = 'block';
+                loadWilayas();
+            }
+        }
+
+        function closeOrderModal() {
+            document.getElementById('orderModal').style.display = 'none';
+            document.getElementById('orderFormElement').reset();
+            currentOrderProduct = null;
+        }
+
+        // Traitement des commandes
+        document.getElementById('orderFormElement').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const orderData = {
+                id: nextOrderId++,
+                productId: currentOrderProduct.id,
+                productName: currentOrderProduct.name,
+                productPrice: currentOrderProduct.price,
+                customerName: document.getElementById('orderName').value,
+                customerPrenom: document.getElementById('orderPrenom').value,
+                customerPhone: document.getElementById('orderPhone').value,
+                wilayaCode: document.getElementById('orderWilaya').value,
+                wilayaName: wilayasData[document.getElementById('orderWilaya').value].name,
+                commune: document.getElementById('orderCommune').value,
+                orderDate: new Date().toLocaleString('fr-FR'),
+                status: 'En attente'
+            };
+
+            orders.unshift(orderData); // Ajouter au début pour l'ordre chronologique
+            closeOrderModal();
+            alert('Commande passée avec succès ! Vous serez contacté bientôt.');
+        });
+
+        function displayOrdersList() {
+            const ordersList = document.getElementById('ordersList');
+            ordersList.innerHTML = '';
+
+            if (orders.length === 0) {
+                ordersList.innerHTML = '<p>Aucune commande pour le moment.</p>';
+                return;
+            }
+
+            orders.forEach(order => {
+                const orderItem = document.createElement('div');
+                orderItem.className = 'order-item';
+                orderItem.innerHTML = `
+                    <div class="order-header">
+                        <strong>Commande #${order.id} - ${order.customerPrenom} ${order.customerName}</strong>
+                        <span class="order-date">${order.orderDate}</span>
+                    </div>
+                    <div class="order-details">
+                        <p><strong>Produit:</strong> ${order.productName} - ${order.productPrice.toLocaleString()} DZD</p>
+                        <p><strong>Client:</strong> ${order.customerPrenom} ${order.customerName}</p>
+                        <p><strong>Téléphone:</strong> ${order.customerPhone}</p>
+                        <p><strong>Adresse:</strong> ${order.commune}, ${order.wilayaName}</p>
+                        <p><strong>Statut:</strong> <span style="color: ${order.status === 'Finalisée' ? '#27ae60' : '#f39c12'}">${order.status}</span></p>
+                    </div>
+                    <div class="order-actions">
+                        ${order.status === 'En attente' ? `<button class="finalize-btn" onclick="finalizeOrder(${order.id})">Finaliser</button>` : ''}
+                        <button class="delete-btn" onclick="deleteOrder(${order.id})">Supprimer</button>
+                    </div>
+                `;
+                ordersList.appendChild(orderItem);
+            });
+        }
+
+        function finalizeOrder(orderId) {
+            if (confirm('Marquer cette commande comme finalisée ?')) {
+                const order = orders.find(o => o.id === orderId);
+                if (order) {
+                    order.status = 'Finalisée';
+                    displayOrdersList();
+                }
+            }
+        }
+
+        function deleteOrder(orderId) {
+            if (confirm('Supprimer définitivement cette commande ?')) {
+                orders = orders.filter(o => o.id !== orderId);
+                displayOrdersList();
+            }
+        }
+
+        // Gestion des clics en dehors des modals
+        window.onclick = function(event) {
+            const loginModal = document.getElementById('loginModal');
+            const orderModal = document.getElementById('orderModal');
+            
+            if (event.target === loginModal) {
+                closeLoginModal();
+            }
+            if (event.target === orderModal) {
+                closeOrderModal();
+            }
+        }
+
+        // Initialisation
+        displayProducts();
+
+        // Smooth scroll pour la navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Gestion des touches Enter pour les modals
+        document.getElementById('username').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('password').focus();
+            }
+        });
+
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                login();
+            }
+        });
+    </script>
+</body>
+</html>
