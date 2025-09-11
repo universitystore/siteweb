@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -15,7 +15,7 @@
             font-family: 'Arial', sans-serif;
             line-height: 1.6;
             color: #333;
-            background: #1a472a;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
 
         /* Header */
@@ -42,7 +42,7 @@
         .logo {
             font-size: 1.8rem;
             font-weight: bold;
-            color: #1a472a;
+            color: #667eea;
         }
 
         .nav-links {
@@ -59,26 +59,23 @@
         }
 
         .nav-links a:hover {
-            color: #1a472a;
+            color: #667eea;
         }
 
         .admin-btn {
-            background: transparent;
-            color: rgba(26, 71, 42, 0.4);
+            background: #667eea;
+            color: white;
             padding: 0.5rem 1rem;
-            border: 1px solid rgba(26, 71, 42, 0.2);
+            border: none;
             border-radius: 25px;
             cursor: pointer;
             font-weight: 500;
-            font-size: 0.9rem;
             transition: all 0.3s ease;
         }
 
         .admin-btn:hover {
-            background: rgba(26, 71, 42, 0.3);
-            color: rgba(26, 71, 42, 0.8);
-            transform: translateY(-1px);
-            border: 1px solid rgba(26, 71, 42, 0.4);
+            background: #5a6fd8;
+            transform: translateY(-2px);
         }
 
         /* Main Content */
@@ -109,8 +106,8 @@
         }
 
         .cta-button {
-            background: #1a472a;
-            color: white;
+            background: white;
+            color: #667eea;
             padding: 1rem 2rem;
             border: none;
             border-radius: 50px;
@@ -124,7 +121,6 @@
         .cta-button:hover {
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-            background: #0d3d1f;
         }
 
         /* Products Section */
@@ -167,14 +163,13 @@
 
         .product-image {
             height: 200px;
-            background: linear-gradient(45deg, #1a472a, #2d5940);
+            background: linear-gradient(45deg, #667eea, #764ba2);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 3rem;
             position: relative;
             overflow: hidden;
-            color: white;
         }
 
         .product-image img {
@@ -196,7 +191,7 @@
 
         .product-price {
             font-size: 1.5rem;
-            color: #1a472a;
+            color: #667eea;
             font-weight: bold;
             margin-bottom: 1rem;
         }
@@ -210,7 +205,7 @@
         .order-now {
             width: 100%;
             padding: 0.8rem;
-            background: #1a472a;
+            background: #667eea;
             color: white;
             border: none;
             border-radius: 8px;
@@ -220,12 +215,12 @@
         }
 
         .order-now:hover {
-            background: #0d3d1f;
+            background: #5a6fd8;
         }
 
         /* Footer */
         .footer {
-            background: #0d3d1f;
+            background: #333;
             color: white;
             text-align: center;
             padding: 2rem;
@@ -307,11 +302,11 @@
         .form-group textarea:focus,
         .form-group select:focus {
             outline: none;
-            border-color: #1a472a;
+            border-color: #667eea;
         }
 
         .submit-btn {
-            background: #1a472a;
+            background: #667eea;
             color: white;
             padding: 1rem 2rem;
             border: none;
@@ -324,7 +319,7 @@
         }
 
         .submit-btn:hover {
-            background: #0d3d1f;
+            background: #5a6fd8;
         }
 
         /* Dashboard Styles */
@@ -366,7 +361,7 @@
         }
 
         .dash-nav-btn.active {
-            background: #1a472a;
+            background: #667eea;
             color: white;
         }
 
@@ -388,11 +383,10 @@
         }
 
         .add-product-form, .orders-section {
-            background: white;
+            background: #f9f9f9;
             padding: 2rem;
             border-radius: 10px;
             margin-bottom: 2rem;
-            border: 1px solid #e0e0e0;
         }
 
         .products-list {
@@ -423,12 +417,11 @@
         }
 
         .order-details {
-            background: white;
+            background: #f8f9fa;
             padding: 1rem;
             border-radius: 5px;
             width: 100%;
             margin: 0.5rem 0;
-            border: 1px solid #e0e0e0;
         }
 
         .order-actions {
@@ -521,7 +514,7 @@
                 <li><a href="#produits">Produits</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
-            <button class="admin-btn" onclick="showLoginModal()">Dashboard Admin</button>
+            <button class="admin-btn" onclick="showLoginModal()">Log in</button>
         </nav>
     </header>
 
@@ -561,7 +554,7 @@
         <div class="modal-content">
             <span class="close" onclick="closeLoginModal()">&times;</span>
             <div class="login-form">
-                <h3>🔐 Connexion Admin</h3>
+                <h3>Log in</h3>
                 <div class="form-group">
                     <label for="username">Nom d'utilisateur</label>
                     <input type="text" id="username" required>
@@ -617,10 +610,7 @@
     <div class="dashboard" id="dashboard">
         <div class="dashboard-header">
             <h2>🎛️ Dashboard Admin</h2>
-            <div>
-                <button class="back-btn" onclick="testGoogleSheets()" style="background: #27ae60; margin-right: 10px;">Test Google Sheets</button>
-                <button class="back-btn" onclick="logout()">Déconnexion</button>
-            </div>
+            <button class="back-btn" onclick="logout()">Déconnexion</button>
         </div>
 
         <div class="dashboard-nav">
@@ -752,6 +742,114 @@
         let nextOrderId = 1;
         let currentOrderProduct = null;
 
+        // Configuration Google Sheets (remplacez par votre URL d'Apps Script)
+        const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz5N84z6RLiGtDVnrFwPbWECNFZWYRgMZJVqzexnidt_B0Y4w5WdL3L3MeZwG1DNx9S/exec';
+
+        // Fonctions pour Google Sheets
+        async function saveOrderToGoogleSheets(orderData) {
+            try {
+                const response = await fetch(GOOGLE_APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'addOrder',
+                        id: orderData.id,
+                        productId: orderData.productId,
+                        productName: orderData.productName,
+                        customerName: orderData.customerName,
+                        customerPrenom: orderData.customerPrenom,
+                        phone: orderData.customerPhone,
+                        wilaya: orderData.wilayaName,
+                        commune: orderData.commune,
+                        date: orderData.orderDate,
+                        status: orderData.status
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Erreur lors de l\'envoi à Google Sheets');
+                }
+                
+                return true;
+            } catch (error) {
+                console.error('Erreur Google Sheets:', error);
+                // Sauvegarder localement en cas d'erreur
+                saveToLocalStorage();
+                return false;
+            }
+        }
+
+        async function saveProductToGoogleSheets(productData) {
+            try {
+                const response = await fetch(GOOGLE_APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'addProduct',
+                        id: productData.id,
+                        name: productData.name,
+                        price: productData.price,
+                        category: productData.category,
+                        description: productData.description,
+                        emoji: productData.emoji
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Erreur lors de l\'envoi à Google Sheets');
+                }
+                
+                return true;
+            } catch (error) {
+                console.error('Erreur Google Sheets:', error);
+                saveToLocalStorage();
+                return false;
+            }
+        }
+
+        // Sauvegarde locale de secours
+        function saveToLocalStorage() {
+            localStorage.setItem('universityStore_products', JSON.stringify(products));
+            localStorage.setItem('universityStore_orders', JSON.stringify(orders));
+            localStorage.setItem('universityStore_nextId', nextId.toString());
+            localStorage.setItem('universityStore_nextOrderId', nextOrderId.toString());
+        }
+
+        function loadFromLocalStorage() {
+            const savedProducts = localStorage.getItem('universityStore_products');
+            const savedOrders = localStorage.getItem('universityStore_orders');
+            const savedNextId = localStorage.getItem('universityStore_nextId');
+            const savedNextOrderId = localStorage.getItem('universityStore_nextOrderId');
+            
+            if (savedProducts) {
+                try {
+                    products = JSON.parse(savedProducts);
+                } catch (e) {
+                    console.error('Erreur lors du chargement des produits:', e);
+                }
+            }
+            
+            if (savedOrders) {
+                try {
+                    orders = JSON.parse(savedOrders);
+                } catch (e) {
+                    console.error('Erreur lors du chargement des commandes:', e);
+                }
+            }
+            
+            if (savedNextId) {
+                nextId = parseInt(savedNextId) || 7;
+            }
+            
+            if (savedNextOrderId) {
+                nextOrderId = parseInt(savedNextOrderId) || 1;
+            }
+        }
+
         // Données des wilayas et communes d'Algérie
         const wilayasData = {
             "01": { name: "Adrar", communes: ["Adrar", "Tamest", "Charouine", "Reggane", "In Salah"] },
@@ -792,4 +890,383 @@
             "36": { name: "El Tarf", communes: ["El Tarf", "El Kala", "Bouhadjar", "Ben M'Hidi", "Boutheldja"] },
             "37": { name: "Tindouf", communes: ["Tindouf", "Oum El Assel", "Hassi Khenig"] },
             "38": { name: "Tissemsilt", communes: ["Tissemsilt", "Theniet El Had", "Bordj Bou Naama", "Lazharia", "Khemisti"] },
-            "39
+            "39": { name: "El Oued", communes: ["El Oued", "Robbah", "Guemar", "Reguiba", "Still"] },
+            "40": { name: "Khenchela", communes: ["Khenchela", "Kais", "Baghai", "El Hamma", "Ensigha"] },
+            "41": { name: "Souk Ahras", communes: ["Souk Ahras", "Sedrata", "M'Daourouch", "Bir Bouhouche", "Taoura"] },
+            "42": { name: "Tipaza", communes: ["Tipaza", "Cherchell", "Menaceur", "Ahmer El Ain", "Bouharoun"] },
+            "43": { name: "Mila", communes: ["Mila", "Ferdjioua", "Chelghoum Laid", "Oued Athmania", "Grarem Gouga"] },
+            "44": { name: "Ain Defla", communes: ["Ain Defla", "Khemis Miliana", "El Attaf", "Boumedfaa", "Djelida"] },
+            "45": { name: "Naâma", communes: ["Naâma", "Mecheria", "Ain Sefra", "Tiout", "Sfissifa"] },
+            "46": { name: "Ain Témouchent", communes: ["Ain Témouchent", "Hammam Bou Hadjar", "Beni Saf", "El Malah", "Ouled Boudjemaa"] },
+            "47": { name: "Ghardaïa", communes: ["Ghardaïa", "El Menia", "Berriane", "Metlili", "El Atteuf"] },
+            "48": { name: "Relizane", communes: ["Relizane", "Mazouna", "Oued Rhiou", "Yellel", "Sidi M'Hamed Ben Ali"] }
+        };
+
+        // Fonctions d'authentification
+        function showLoginModal() {
+            document.getElementById('loginModal').style.display = 'block';
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+            document.getElementById('loginError').textContent = '';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        }
+
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username === 'younes' && password === 'Its.that.person.7') {
+                closeLoginModal();
+                showDashboard();
+            } else {
+                document.getElementById('loginError').textContent = 'Nom d\'utilisateur ou mot de passe incorrect';
+            }
+        }
+
+        function logout() {
+            hideDashboard();
+        }
+
+        // Fonctions du dashboard
+        function showDashboard() {
+            const mainContent = document.getElementById('mainContent');
+            const dashboard = document.getElementById('dashboard');
+            const header = document.querySelector('.header');
+            const footer = document.querySelector('.footer');
+
+            dashboard.classList.add('active');
+            mainContent.style.display = 'none';
+            header.style.display = 'none';
+            footer.style.display = 'none';
+            displayProductsList();
+            displayOrdersList();
+        }
+
+        function hideDashboard() {
+            const mainContent = document.getElementById('mainContent');
+            const dashboard = document.getElementById('dashboard');
+            const header = document.querySelector('.header');
+            const footer = document.querySelector('.footer');
+
+            dashboard.classList.remove('active');
+            mainContent.style.display = 'block';
+            header.style.display = 'block';
+            footer.style.display = 'block';
+        }
+
+        function showDashSection(section) {
+            // Cacher toutes les sections
+            document.querySelectorAll('.dashboard-section').forEach(sec => {
+                sec.classList.remove('active');
+            });
+            
+            // Désactiver tous les boutons de navigation
+            document.querySelectorAll('.dash-nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Afficher la section demandée
+            document.getElementById(section + 'Section').classList.add('active');
+            
+            // Activer le bouton correspondant
+            event.target.classList.add('active');
+        }
+
+        // Fonctions pour les produits
+        function displayProducts() {
+            const productGrid = document.getElementById('productGrid');
+            productGrid.innerHTML = '';
+
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                
+                const imageContent = product.image 
+                    ? `<img src="${product.image}" alt="${product.name}">`
+                    : (product.emoji || '📦');
+
+                productCard.innerHTML = `
+                    <div class="product-image">${imageContent}</div>
+                    <div class="product-info">
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-price">${product.price.toLocaleString()} DZD</div>
+                        <div class="product-description">${product.description}</div>
+                        <button class="order-now" onclick="openOrderModal(${product.id})">Commander maintenant</button>
+                    </div>
+                `;
+                productGrid.appendChild(productCard);
+            });
+        }
+
+        function displayProductsList() {
+            const productsList = document.getElementById('productsList');
+            productsList.innerHTML = '';
+
+            products.forEach(product => {
+                const productItem = document.createElement('div');
+                productItem.className = 'product-item';
+                productItem.innerHTML = `
+                    <div>
+                        <strong>${product.emoji || '📦'} ${product.name}</strong>
+                        <br>
+                        <small>${product.price.toLocaleString()} DZD - ${product.category}</small>
+                    </div>
+                    <button class="delete-btn" onclick="deleteProduct(${product.id})">Supprimer</button>
+                `;
+                productsList.appendChild(productItem);
+            });
+        }
+
+        function previewImage() {
+            const fileInput = document.getElementById('productImage');
+            const preview = document.getElementById('imagePreview');
+            const file = fileInput.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                preview.style.display = 'none';
+            }
+        }
+
+        // Ajouter un produit
+        document.getElementById('addProductForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('productName').value;
+            const price = parseInt(document.getElementById('productPrice').value);
+            const category = document.getElementById('productCategory').value;
+            const description = document.getElementById('productDescription').value;
+            const emoji = document.getElementById('productEmoji').value || '📦';
+            const imageFile = document.getElementById('productImage').files[0];
+
+            let imageDataURL = null;
+            
+            if (imageFile) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imageDataURL = e.target.result;
+                    
+                    const newProduct = {
+                        id: nextId++,
+                        name: name,
+                        price: price,
+                        category: category,
+                        description: description,
+                        emoji: emoji,
+                        image: imageDataURL
+                    };
+
+                    products.push(newProduct);
+                    displayProducts();
+                    displayProductsList();
+                    
+                    // Reset form
+                    document.getElementById('addProductForm').reset();
+                    document.getElementById('imagePreview').style.display = 'none';
+                    
+                    alert('Produit ajouté avec succès !');
+                };
+                reader.readAsDataURL(imageFile);
+            } else {
+                const newProduct = {
+                    id: nextId++,
+                    name: name,
+                    price: price,
+                    category: category,
+                    description: description,
+                    emoji: emoji,
+                    image: null
+                };
+
+                products.push(newProduct);
+                displayProducts();
+                displayProductsList();
+                
+                // Reset form
+                this.reset();
+                document.getElementById('imagePreview').style.display = 'none';
+                
+                alert('Produit ajouté avec succès !');
+            }
+        });
+
+        // Supprimer un produit
+        function deleteProduct(id) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer ce produit ?')) {
+                products = products.filter(product => product.id !== id);
+                displayProducts();
+                displayProductsList();
+            }
+        }
+
+        // Fonctions pour les commandes
+        function loadWilayas() {
+            const wilayaSelect = document.getElementById('orderWilaya');
+            wilayaSelect.innerHTML = '<option value="">Sélectionner une wilaya</option>';
+            
+            Object.keys(wilayasData).forEach(code => {
+                const option = document.createElement('option');
+                option.value = code;
+                option.textContent = `${code} - ${wilayasData[code].name}`;
+                wilayaSelect.appendChild(option);
+            });
+        }
+
+        function updateCommunes() {
+            const wilayaCode = document.getElementById('orderWilaya').value;
+            const communeSelect = document.getElementById('orderCommune');
+            
+            communeSelect.innerHTML = '<option value="">Sélectionner une commune</option>';
+            
+            if (wilayaCode && wilayasData[wilayaCode]) {
+                wilayasData[wilayaCode].communes.forEach(commune => {
+                    const option = document.createElement('option');
+                    option.value = commune;
+                    option.textContent = commune;
+                    communeSelect.appendChild(option);
+                });
+            }
+        }
+
+        function openOrderModal(productId) {
+            currentOrderProduct = products.find(p => p.id === productId);
+            if (currentOrderProduct) {
+                document.getElementById('orderModal').style.display = 'block';
+                loadWilayas();
+            }
+        }
+
+        function closeOrderModal() {
+            document.getElementById('orderModal').style.display = 'none';
+            document.getElementById('orderFormElement').reset();
+            currentOrderProduct = null;
+        }
+
+        // Traitement des commandes
+        document.getElementById('orderFormElement').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const orderData = {
+                id: nextOrderId++,
+                productId: currentOrderProduct.id,
+                productName: currentOrderProduct.name,
+                productPrice: currentOrderProduct.price,
+                customerName: document.getElementById('orderName').value,
+                customerPrenom: document.getElementById('orderPrenom').value,
+                customerPhone: document.getElementById('orderPhone').value,
+                wilayaCode: document.getElementById('orderWilaya').value,
+                wilayaName: wilayasData[document.getElementById('orderWilaya').value].name,
+                commune: document.getElementById('orderCommune').value,
+                orderDate: new Date().toLocaleString('fr-FR'),
+                status: 'En attente'
+            };
+
+            orders.unshift(orderData); // Ajouter au début pour l'ordre chronologique
+            closeOrderModal();
+            alert('Commande passée avec succès ! Vous serez contacté bientôt.');
+        });
+
+        function displayOrdersList() {
+            const ordersList = document.getElementById('ordersList');
+            ordersList.innerHTML = '';
+
+            if (orders.length === 0) {
+                ordersList.innerHTML = '<p>Aucune commande pour le moment.</p>';
+                return;
+            }
+
+            orders.forEach(order => {
+                const orderItem = document.createElement('div');
+                orderItem.className = 'order-item';
+                orderItem.innerHTML = `
+                    <div class="order-header">
+                        <strong>Commande #${order.id} - ${order.customerPrenom} ${order.customerName}</strong>
+                        <span class="order-date">${order.orderDate}</span>
+                    </div>
+                    <div class="order-details">
+                        <p><strong>Produit:</strong> ${order.productName} - ${order.productPrice.toLocaleString()} DZD</p>
+                        <p><strong>Client:</strong> ${order.customerPrenom} ${order.customerName}</p>
+                        <p><strong>Téléphone:</strong> ${order.customerPhone}</p>
+                        <p><strong>Adresse:</strong> ${order.commune}, ${order.wilayaName}</p>
+                        <p><strong>Statut:</strong> <span style="color: ${order.status === 'Finalisée' ? '#27ae60' : '#f39c12'}">${order.status}</span></p>
+                    </div>
+                    <div class="order-actions">
+                        ${order.status === 'En attente' ? `<button class="finalize-btn" onclick="finalizeOrder(${order.id})">Finaliser</button>` : ''}
+                        <button class="delete-btn" onclick="deleteOrder(${order.id})">Supprimer</button>
+                    </div>
+                `;
+                ordersList.appendChild(orderItem);
+            });
+        }
+
+        function finalizeOrder(orderId) {
+            if (confirm('Marquer cette commande comme finalisée ?')) {
+                const order = orders.find(o => o.id === orderId);
+                if (order) {
+                    order.status = 'Finalisée';
+                    displayOrdersList();
+                }
+            }
+        }
+
+        function deleteOrder(orderId) {
+            if (confirm('Supprimer définitivement cette commande ?')) {
+                orders = orders.filter(o => o.id !== orderId);
+                displayOrdersList();
+            }
+        }
+
+        // Gestion des clics en dehors des modals
+        window.onclick = function(event) {
+            const loginModal = document.getElementById('loginModal');
+            const orderModal = document.getElementById('orderModal');
+            
+            if (event.target === loginModal) {
+                closeLoginModal();
+            }
+            if (event.target === orderModal) {
+                closeOrderModal();
+            }
+        }
+
+        // Initialisation
+        displayProducts();
+
+        // Smooth scroll pour la navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Gestion des touches Enter pour les modals
+        document.getElementById('username').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('password').focus();
+            }
+        });
+
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                login();
+            }
+        });
+    </script>
+</body>
+</html>
