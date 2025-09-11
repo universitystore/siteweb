@@ -742,6 +742,114 @@
         let nextOrderId = 1;
         let currentOrderProduct = null;
 
+        // Configuration Google Sheets (remplacez par votre URL d'Apps Script)
+        const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz5N84z6RLiGtDVnrFwPbWECNFZWYRgMZJVqzexnidt_B0Y4w5WdL3L3MeZwG1DNx9S/exec';
+
+        // Fonctions pour Google Sheets
+        async function saveOrderToGoogleSheets(orderData) {
+            try {
+                const response = await fetch(GOOGLE_APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'addOrder',
+                        id: orderData.id,
+                        productId: orderData.productId,
+                        productName: orderData.productName,
+                        customerName: orderData.customerName,
+                        customerPrenom: orderData.customerPrenom,
+                        phone: orderData.customerPhone,
+                        wilaya: orderData.wilayaName,
+                        commune: orderData.commune,
+                        date: orderData.orderDate,
+                        status: orderData.status
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Erreur lors de l\'envoi à Google Sheets');
+                }
+                
+                return true;
+            } catch (error) {
+                console.error('Erreur Google Sheets:', error);
+                // Sauvegarder localement en cas d'erreur
+                saveToLocalStorage();
+                return false;
+            }
+        }
+
+        async function saveProductToGoogleSheets(productData) {
+            try {
+                const response = await fetch(GOOGLE_APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'addProduct',
+                        id: productData.id,
+                        name: productData.name,
+                        price: productData.price,
+                        category: productData.category,
+                        description: productData.description,
+                        emoji: productData.emoji
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Erreur lors de l\'envoi à Google Sheets');
+                }
+                
+                return true;
+            } catch (error) {
+                console.error('Erreur Google Sheets:', error);
+                saveToLocalStorage();
+                return false;
+            }
+        }
+
+        // Sauvegarde locale de secours
+        function saveToLocalStorage() {
+            localStorage.setItem('universityStore_products', JSON.stringify(products));
+            localStorage.setItem('universityStore_orders', JSON.stringify(orders));
+            localStorage.setItem('universityStore_nextId', nextId.toString());
+            localStorage.setItem('universityStore_nextOrderId', nextOrderId.toString());
+        }
+
+        function loadFromLocalStorage() {
+            const savedProducts = localStorage.getItem('universityStore_products');
+            const savedOrders = localStorage.getItem('universityStore_orders');
+            const savedNextId = localStorage.getItem('universityStore_nextId');
+            const savedNextOrderId = localStorage.getItem('universityStore_nextOrderId');
+            
+            if (savedProducts) {
+                try {
+                    products = JSON.parse(savedProducts);
+                } catch (e) {
+                    console.error('Erreur lors du chargement des produits:', e);
+                }
+            }
+            
+            if (savedOrders) {
+                try {
+                    orders = JSON.parse(savedOrders);
+                } catch (e) {
+                    console.error('Erreur lors du chargement des commandes:', e);
+                }
+            }
+            
+            if (savedNextId) {
+                nextId = parseInt(savedNextId) || 7;
+            }
+            
+            if (savedNextOrderId) {
+                nextOrderId = parseInt(savedNextOrderId) || 1;
+            }
+        }
+
         // Données des wilayas et communes d'Algérie
         const wilayasData = {
             "01": { name: "Adrar", communes: ["Adrar", "Tamest", "Charouine", "Reggane", "In Salah"] },
