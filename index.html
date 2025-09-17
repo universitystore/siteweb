@@ -1,4 +1,4 @@
-html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -11,23 +11,126 @@ html>
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        :root {
+            --primary: #667eea;
+            --primary-dark: #5a6fd8;
+            --secondary: #764ba2;
+            --success: #27ae60;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
         }
 
-        /* Header */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: #0f0f1e;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: linear-gradient(125deg, #667eea 0%, #764ba2 100%);
+            opacity: 0.9;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: drift 20s linear infinite;
+        }
+
+        @keyframes drift {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Floating particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: float-up 15s infinite linear;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        /* Glass morphism header */
         .header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
             padding: 1rem 0;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .header.scrolled .logo,
+        .header.scrolled .nav-links a {
+            color: var(--dark);
         }
 
         .nav {
@@ -42,7 +145,15 @@ html>
         .logo {
             font-size: 1.8rem;
             font-weight: bold;
-            color: #667eea;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
         .nav-links {
@@ -53,29 +164,61 @@ html>
 
         .nav-links a {
             text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: #667eea;
-        }
-
-        .admin-btn {
-            background: #667eea;
             color: white;
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
             font-weight: 500;
+            position: relative;
             transition: all 0.3s ease;
         }
 
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .admin-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .admin-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .admin-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
         .admin-btn:hover {
-            background: #5a6fd8;
             transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
         }
 
         /* Main Content */
@@ -84,49 +227,97 @@ html>
             min-height: 100vh;
         }
 
-        /* Hero Section */
+        /* Hero Section with advanced animations */
         .hero {
             text-align: center;
-            padding: 4rem 2rem;
+            padding: 6rem 2rem;
             color: white;
+            position: relative;
+            overflow: hidden;
         }
 
         .hero h1 {
-            font-size: 3rem;
+            font-size: 4rem;
             margin-bottom: 1rem;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease-out;
+            background: linear-gradient(45deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .hero p {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             margin-bottom: 2rem;
-            max-width: 600px;
+            max-width: 700px;
             margin-left: auto;
             margin-right: auto;
+            animation: fadeInUp 1s ease-out 0.2s both;
+            opacity: 0.95;
         }
 
         .cta-button {
             background: white;
-            color: #667eea;
-            padding: 1rem 2rem;
+            color: var(--primary);
+            padding: 1.2rem 2.5rem;
             border: none;
             border-radius: 50px;
             font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
         }
 
         .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            color: white;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
-        /* Products Section */
+        .cta-button:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+
+        .cta-button span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Products Section with 3D effects */
         .products {
-            background: white;
-            padding: 4rem 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 5rem 2rem;
+            position: relative;
         }
 
         .container {
@@ -136,40 +327,93 @@ html>
 
         .section-title {
             text-align: center;
-            font-size: 2.5rem;
+            font-size: 3rem;
             margin-bottom: 3rem;
-            color: #333;
+            color: white;
+            position: relative;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 2px;
         }
 
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            padding: 2rem 0;
         }
 
         .product-card {
-            background: white;
-            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            border: 1px solid #f0f0f0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transform-style: preserve-3d;
+            position: relative;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+
+        .product-card:hover::before {
+            opacity: 1;
         }
 
         .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            transform: translateY(-15px) rotateX(-5deg) scale(1.02);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
         }
 
         .product-image {
-            height: 200px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
+            height: 220px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
+            font-size: 4rem;
             position: relative;
             overflow: hidden;
+        }
+
+        .product-image::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s;
+            opacity: 0;
+        }
+
+        .product-card:hover .product-image::after {
+            animation: shine 0.6s ease-in-out;
         }
 
         .product-image img {
@@ -178,59 +422,118 @@ html>
             object-fit: cover;
         }
 
+        @keyframes shine {
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+                opacity: 0;
+            }
+        }
+
         .product-info {
-            padding: 1.5rem;
+            padding: 2rem;
+            position: relative;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .product-name {
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             font-weight: bold;
             margin-bottom: 0.5rem;
-            color: #333;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
         }
 
         .product-price {
-            font-size: 1.5rem;
-            color: #667eea;
+            font-size: 1.8rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             font-weight: bold;
             margin-bottom: 1rem;
+            animation: pulse 2s ease-in-out infinite;
         }
 
         .product-description {
-            color: #666;
-            margin-bottom: 1rem;
-            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
         }
 
         .order-now {
             width: 100%;
-            padding: 0.8rem;
-            background: #667eea;
+            padding: 1rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             font-weight: bold;
+            font-size: 1.1rem;
             cursor: pointer;
-            transition: background 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .order-now::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .order-now:hover::after {
+            width: 400px;
+            height: 400px;
         }
 
         .order-now:hover {
-            background: #5a6fd8;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
         }
 
-        /* Footer */
+        /* Footer with gradient */
         .footer {
-            background: #333;
+            background: linear-gradient(135deg, rgba(51, 51, 51, 0.9), rgba(0, 0, 0, 0.9));
             color: white;
             text-align: center;
-            padding: 2rem;
+            padding: 3rem 2rem;
+            position: relative;
+            overflow: hidden;
         }
 
-        .footer-info {
-            margin-bottom: 1rem;
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #667eea, #764ba2, transparent);
+            animation: slide 3s linear infinite;
         }
 
-        /* Modal Styles */
+        @keyframes slide {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Modal Styles with blur effect */
         .modal {
             display: none;
             position: fixed;
@@ -239,99 +542,153 @@ html>
             top: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .modal-content {
-            background: white;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.9));
             margin: 5% auto;
-            padding: 2rem;
-            border-radius: 10px;
+            padding: 2.5rem;
+            border-radius: 20px;
             width: 90%;
             max-width: 500px;
             max-height: 80%;
             overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: slideUp 0.4s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         .close {
-            color: #aaa;
+            color: #999;
             float: right;
-            font-size: 28px;
+            font-size: 32px;
             font-weight: bold;
             cursor: pointer;
+            transition: all 0.3s ease;
         }
 
         .close:hover {
-            color: black;
+            color: var(--danger);
+            transform: rotate(90deg);
         }
 
-        /* Login Form */
-        .login-form {
-            text-align: center;
-        }
-
-        .login-form h3 {
-            margin-bottom: 2rem;
-            color: #333;
-        }
-
+        /* Form Styles */
         .form-group {
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             text-align: left;
         }
 
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            font-weight: bold;
-            color: #333;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .form-group input,
         .form-group textarea,
         .form-group select {
             width: 100%;
-            padding: 0.8rem;
-            border: 2px solid #f0f0f0;
-            border-radius: 8px;
+            padding: 1rem;
+            border: 2px solid transparent;
+            border-radius: 12px;
             font-size: 1rem;
-            transition: border-color 0.3s ease;
+            background: rgba(102, 126, 234, 0.05);
+            transition: all 0.3s ease;
         }
 
         .form-group input:focus,
         .form-group textarea:focus,
         .form-group select:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
         }
 
         .submit-btn {
-            background: #667eea;
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
-            padding: 1rem 2rem;
+            padding: 1.2rem 2rem;
             border: none;
-            border-radius: 8px;
-            font-size: 1rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
-            transition: background 0.3s ease;
             width: 100%;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .submit-btn:hover::before {
+            width: 600px;
+            height: 600px;
         }
 
         .submit-btn:hover {
-            background: #5a6fd8;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .submit-btn:disabled:hover {
+            box-shadow: none;
         }
 
         /* Dashboard Styles */
         .dashboard {
             display: none;
-            background: white;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
             min-height: 100vh;
             padding: 2rem;
+            color: white;
         }
 
         .dashboard.active {
             display: block;
+            animation: fadeIn 0.5s ease;
         }
 
         .dashboard-header {
@@ -340,42 +697,41 @@ html>
             align-items: center;
             margin-bottom: 2rem;
             padding-bottom: 1rem;
-            border-bottom: 2px solid #f0f0f0;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
         }
 
         .dashboard-nav {
             display: flex;
             gap: 1rem;
             margin-bottom: 2rem;
+            flex-wrap: wrap;
         }
 
         .dash-nav-btn {
-            padding: 0.8rem 1.5rem;
+            padding: 1rem 2rem;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             cursor: pointer;
             font-weight: bold;
             transition: all 0.3s ease;
-            background: #f0f0f0;
-            color: #333;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            backdrop-filter: blur(10px);
         }
 
         .dash-nav-btn.active {
-            background: #667eea;
-            color: white;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
         }
 
-        .back-btn {
-            background: #666;
-            color: white;
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+        .dash-nav-btn:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .dashboard-section {
             display: none;
+            animation: fadeInUp 0.5s ease;
         }
 
         .dashboard-section.active {
@@ -383,110 +739,174 @@ html>
         }
 
         .add-product-form, .orders-section {
-            background: #f9f9f9;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
             padding: 2rem;
-            border-radius: 10px;
+            border-radius: 20px;
             margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .products-list {
-            background: white;
-            border-radius: 10px;
-            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .product-item, .order-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem;
-            border-bottom: 1px solid #f0f0f0;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            transition: all 0.3s ease;
         }
 
-        .order-item {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 0.5rem;
-        }
-
-        .order-header {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            align-items: center;
-        }
-
-        .order-details {
-            background: #f8f9fa;
-            padding: 1rem;
-            border-radius: 5px;
-            width: 100%;
-            margin: 0.5rem 0;
-        }
-
-        .order-actions {
-            display: flex;
-            gap: 0.5rem;
+        .product-item:hover, .order-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
         }
 
         .delete-btn, .finalize-btn {
-            padding: 0.5rem 1rem;
+            padding: 0.6rem 1.2rem;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
+            transition: all 0.3s ease;
         }
 
         .delete-btn {
-            background: #e74c3c;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
             color: white;
         }
 
         .delete-btn:hover {
-            background: #c0392b;
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
         }
 
         .finalize-btn {
-            background: #27ae60;
+            background: linear-gradient(135deg, #27ae60, #229954);
             color: white;
         }
 
         .finalize-btn:hover {
-            background: #229954;
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
         }
 
-        .image-preview {
-            max-width: 100px;
-            max-height: 100px;
-            object-fit: cover;
-            border-radius: 5px;
-            margin-top: 0.5rem;
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
         }
 
-        .error-message {
-            color: #e74c3c;
-            margin-top: 0.5rem;
-            font-size: 0.9rem;
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Success/Error Messages */
+        .message {
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            animation: slideInRight 0.5s ease;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
 
         .success-message {
+            background: linear-gradient(135deg, rgba(39, 174, 96, 0.2), rgba(46, 204, 113, 0.2));
+            border-left: 4px solid #27ae60;
             color: #27ae60;
-            margin-top: 0.5rem;
-            font-size: 0.9rem;
+        }
+
+        .error-message {
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.2), rgba(192, 57, 43, 0.2));
+            border-left: 4px solid #e74c3c;
+            color: #e74c3c;
+        }
+
+        .warning-message {
+            background: linear-gradient(135deg, rgba(241, 196, 15, 0.2), rgba(230, 126, 34, 0.2));
+            border-left: 4px solid #f1c40f;
+            color: #f1c40f;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .mobile-menu span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 5px 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1rem;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+                animation: slideDown 0.3s ease;
+            }
+
+            .nav-links a {
+                color: var(--dark);
+                padding: 0.5rem 0;
+            }
+
+            .mobile-menu {
+                display: block;
             }
 
             .hero h1 {
-                font-size: 2rem;
+                font-size: 2.5rem;
             }
 
             .hero p {
-                font-size: 1rem;
+                font-size: 1.1rem;
             }
 
             .product-grid {
@@ -496,43 +916,91 @@ html>
             .modal-content {
                 width: 95%;
                 margin: 10% auto;
+                padding: 1.5rem;
             }
 
             .dashboard-nav {
-                flex-wrap: wrap;
+                justify-content: center;
             }
+
+            .dash-nav-btn {
+                font-size: 0.9rem;
+                padding: 0.8rem 1.5rem;
+            }
+        }
+
+        /* Scroll animations */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Notification Badge */
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+            animation: pulse 2s ease-in-out infinite;
         }
     </style>
 </head>
 <body>
+    <!-- Animated Background -->
+    <div class="bg-animation"></div>
+    <div class="particles" id="particles"></div>
+
     <!-- Header -->
-    <header class="header">
+    <header class="header" id="header">
         <nav class="nav">
             <div class="logo">🎓 University Store</div>
-            <ul class="nav-links">
+            <button class="mobile-menu" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
                 <li><a href="#accueil">Accueil</a></li>
                 <li><a href="#produits">Produits</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
-            <button class="admin-btn" onclick="showLoginModal()">Log in</button>
+            <button class="admin-btn" onclick="showLoginModal()">
+                <span>Admin</span>
+            </button>
         </nav>
     </header>
 
     <!-- Main Content -->
     <main class="main-content" id="mainContent">
         <!-- Hero Section -->
-        <section class="hero">
+        <section class="hero" id="accueil">
             <h1>🎓 University Store</h1>
-            <p>Ton style, ta technologie. Découvrez notre collection d'habillement homme tendance et d'accessoires électroniques pratiques. Qualité garantie – Prix étudiés pour les étudiants algériens.</p>
-            <button class="cta-button" onclick="document.getElementById('produits').scrollIntoView()">
-                Découvrir nos produits
+            <p>Ton style, ta technologie. Découvrez notre collection d'habillement homme tendance et d'accessoires électroniques pratiques.</p>
+            <p style="font-size: 1rem; opacity: 0.8;">✨ Qualité garantie – Prix étudiés pour les étudiants algériens</p>
+            <button class="cta-button" onclick="scrollToProducts()">
+                <span>Découvrir nos produits →</span>
             </button>
         </section>
 
         <!-- Products Section -->
         <section class="products" id="produits">
             <div class="container">
-                <h2 class="section-title">Nos Produits</h2>
+                <h2 class="section-title scroll-reveal">Nos Produits Premium</h2>
                 <div class="product-grid" id="productGrid">
                     <!-- Les produits seront ajoutés dynamiquement -->
                 </div>
@@ -541,11 +1009,12 @@ html>
     </main>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="footer" id="contact">
         <div class="footer-info">
-            <p>📍 Disponible en Algérie | 🚚 Livraison rapide</p>
-            <p>✨ Qualité garantie – Prix étudiés</p>
-            <p>&copy; 2024 University Store. Tous droits réservés.</p>
+            <p style="font-size: 1.2rem; margin-bottom: 1rem;">📍 Disponible partout en Algérie</p>
+            <p>🚚 Livraison rapide et sécurisée</p>
+            <p>💎 Qualité premium garantie</p>
+            <p style="margin-top: 2rem; opacity: 0.8;">&copy; 2024 University Store. Tous droits réservés.</p>
         </div>
     </footer>
 
@@ -554,17 +1023,17 @@ html>
         <div class="modal-content">
             <span class="close" onclick="closeLoginModal()">&times;</span>
             <div class="login-form">
-                <h3>Log in</h3>
+                <h3 style="text-align: center; font-size: 2rem; margin-bottom: 2rem; background: linear-gradient(45deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Connexion Admin</h3>
                 <div class="form-group">
                     <label for="username">Nom d'utilisateur</label>
-                    <input type="text" id="username" required>
+                    <input type="text" id="username" required placeholder="Entrez votre nom d'utilisateur" autocomplete="username">
                 </div>
                 <div class="form-group">
                     <label for="password">Mot de passe</label>
-                    <input type="password" id="password" required>
+                    <input type="password" id="password" required placeholder="Entrez votre mot de passe" autocomplete="current-password">
                 </div>
                 <button class="submit-btn" onclick="login()">Se connecter</button>
-                <div id="loginError" class="error-message"></div>
+                <div id="loginError" class="error-message" style="margin-top: 1rem; display: none;"></div>
             </div>
         </div>
     </div>
@@ -574,19 +1043,19 @@ html>
         <div class="modal-content">
             <span class="close" onclick="closeOrderModal()">&times;</span>
             <div id="orderForm">
-                <h3>📦 Passer une commande</h3>
+                <h3 style="text-align: center; font-size: 2rem; margin-bottom: 2rem; background: linear-gradient(45deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">📦 Passer une commande</h3>
                 <form id="orderFormElement">
                     <div class="form-group">
                         <label for="orderName">Nom</label>
-                        <input type="text" id="orderName" required>
+                        <input type="text" id="orderName" required placeholder="Votre nom" autocomplete="family-name">
                     </div>
                     <div class="form-group">
                         <label for="orderPrenom">Prénom</label>
-                        <input type="text" id="orderPrenom" required>
+                        <input type="text" id="orderPrenom" required placeholder="Votre prénom" autocomplete="given-name">
                     </div>
                     <div class="form-group">
                         <label for="orderPhone">Numéro de téléphone</label>
-                        <input type="tel" id="orderPhone" required>
+                        <input type="tel" id="orderPhone" required placeholder="07XX XX XX XX" autocomplete="tel">
                     </div>
                     <div class="form-group">
                         <label for="orderWilaya">Wilaya</label>
@@ -609,28 +1078,31 @@ html>
     <!-- Dashboard -->
     <div class="dashboard" id="dashboard">
         <div class="dashboard-header">
-            <h2>🎛️ Dashboard Admin</h2>
-            <button class="back-btn" onclick="logout()">Déconnexion</button>
+            <h2 style="font-size: 2.5rem;">🎛️ Dashboard Admin</h2>
+            <button class="delete-btn" onclick="logout()">Déconnexion</button>
         </div>
 
         <div class="dashboard-nav">
-            <button class="dash-nav-btn active" onclick="showDashSection('products')">Produits</button>
-            <button class="dash-nav-btn" onclick="showDashSection('orders')">Commandes</button>
+            <button class="dash-nav-btn active" onclick="showDashSection('products', event)">📦 Produits</button>
+            <button class="dash-nav-btn" onclick="showDashSection('orders', event)">📋 Commandes</button>
+            <button class="dash-nav-btn" onclick="showDashSection('security', event)">🔒 Sécurité</button>
+            <button class="dash-nav-btn" onclick="showDashSection('backup', event)">💾 Sauvegarde</button>
+            <button class="dash-nav-btn" onclick="showDashSection('analytics', event)">📊 Statistiques</button>
         </div>
 
         <!-- Products Section -->
         <div class="dashboard-section active" id="productsSection">
             <div class="add-product-form">
-                <h3>Ajouter un nouveau produit</h3>
+                <h3 style="font-size: 1.8rem; margin-bottom: 2rem;">Ajouter un nouveau produit</h3>
                 <form id="addProductForm">
                     <div class="form-group">
                         <label for="productName">Nom du produit</label>
-                        <input type="text" id="productName" required>
+                        <input type="text" id="productName" required placeholder="Ex: Chemise Oxford Premium">
                     </div>
                     
                     <div class="form-group">
                         <label for="productPrice">Prix (DZD)</label>
-                        <input type="number" id="productPrice" required>
+                        <input type="number" id="productPrice" required placeholder="Ex: 2500" min="1" max="999999">
                     </div>
                     
                     <div class="form-group">
@@ -645,7 +1117,7 @@ html>
                     
                     <div class="form-group">
                         <label for="productDescription">Description</label>
-                        <textarea id="productDescription" rows="3" required></textarea>
+                        <textarea id="productDescription" rows="3" required placeholder="Description détaillée du produit"></textarea>
                     </div>
                     
                     <div class="form-group">
@@ -656,7 +1128,7 @@ html>
                     <div class="form-group">
                         <label for="productImage">Image du produit</label>
                         <input type="file" id="productImage" accept="image/*" onchange="previewImage()">
-                        <img id="imagePreview" class="image-preview" style="display: none;">
+                        <img id="imagePreview" style="display: none; max-width: 200px; margin-top: 1rem; border-radius: 8px;">
                     </div>
                     
                     <button type="submit" class="submit-btn">Ajouter le produit</button>
@@ -664,7 +1136,7 @@ html>
             </div>
 
             <div class="products-list">
-                <h3>Produits existants</h3>
+                <h3 style="font-size: 1.8rem; margin-bottom: 2rem;">Produits existants</h3>
                 <div id="productsList"></div>
             </div>
         </div>
@@ -672,14 +1144,556 @@ html>
         <!-- Orders Section -->
         <div class="dashboard-section" id="ordersSection">
             <div class="orders-section">
-                <h3>Commandes récentes</h3>
+                <h3 style="font-size: 1.8rem; margin-bottom: 2rem;">Commandes récentes</h3>
                 <div id="ordersList"></div>
+            </div>
+        </div>
+
+        <!-- Security Section -->
+        <div class="dashboard-section" id="securitySection">
+            <div class="add-product-form">
+                <h3 style="font-size: 1.8rem; margin-bottom: 2rem;">🔒 Tableau de Bord Sécurité</h3>
+                <div id="securityStats"></div>
+                <div id="securityLogs" style="margin-top: 2rem;"></div>
+            </div>
+        </div>
+
+        <!-- Backup Section -->
+        <div class="dashboard-section" id="backupSection">
+            <div class="add-product-form">
+                <h3 style="font-size: 1.8rem; margin-bottom: 2rem;">💾 Gestion des Sauvegardes</h3>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                    <div style="background: rgba(39, 174, 96, 0.1); padding: 2rem; border-radius: 12px; border: 1px solid rgba(39, 174, 96, 0.3);">
+                        <h4 style="margin-bottom: 1rem; color: #2ecc71;">🔽 Créer une Sauvegarde</h4>
+                        <p style="margin-bottom: 1rem; opacity: 0.8;">Exporte toutes vos données (produits et commandes) dans un fichier JSON.</p>
+                        <button class="finalize-btn" onclick="backupManager.createBackup()" style="width: 100%;">
+                            Télécharger Sauvegarde
+                        </button>
+                    </div>
+                    
+                    <div style="background: rgba(52, 152, 219, 0.1); padding: 2rem; border-radius: 12px; border: 1px solid rgba(52, 152, 219, 0.3);">
+                        <h4 style="margin-bottom: 1rem; color: #3498db;">🔼 Restaurer Sauvegarde</h4>
+                        <p style="margin-bottom: 1rem; opacity: 0.8;">Importe des données depuis un fichier de sauvegarde.</p>
+                        <input type="file" id="restoreFile" accept=".json" style="margin-bottom: 1rem; width: 100%;">
+                        <button class="submit-btn" onclick="handleRestore()" style="width: 100%;">
+                            Restaurer Données
+                        </button>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 2rem; padding: 1rem; background: rgba(241, 196, 15, 0.1); border-radius: 8px; border-left: 4px solid #f1c40f;">
+                    <strong>⚠️ Important:</strong>
+                    <ul style="margin-top: 0.5rem; margin-left: 1rem; opacity: 0.9;">
+                        <li>Les sauvegardes automatiques sont créées toutes les heures</li>
+                        <li>La restauration remplace toutes les données actuelles</li>
+                        <li>Vérifiez toujours l'intégrité du fichier avant restauration</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Section -->
+        <div class="dashboard-section" id="analyticsSection">
+            <div class="add-product-form">
+                <h3 style="font-size: 1.8rem; margin-bottom: 2rem;">📊 Statistiques du Magasin</h3>
+                <div id="analyticsContent"></div>
             </div>
         </div>
     </div>
 
     <script>
-        // Données des produits stockées en mémoire
+        // ========== ENHANCED SECURITY SYSTEM ==========
+        
+        // Security Configuration
+        const SECURITY_CONFIG = {
+            ADMIN_CREDENTIALS: {
+                username: '8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4',
+                password: 'a8b64babd0aca91a59bdbb7761b421d4f2bb38280d3a75ba0f21f2bebc45ab9d'
+            },
+            MAX_LOGIN_ATTEMPTS: 3,
+            LOCKOUT_DURATION: 15 * 60 * 1000,
+            SESSION_DURATION: 60 * 60 * 1000,
+            TOKEN_REFRESH_INTERVAL: 30 * 60 * 1000
+        };
+
+        // Replace with your Google Apps Script Web App URL
+        const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID_HERE/exec';
+
+        // Security Manager Class
+        class SecurityManager {
+            constructor() {
+                this.loginAttempts = this.getLoginAttempts();
+                this.lockoutTime = this.getLockoutTime();
+                this.sessionToken = this.getSessionToken();
+                this.lastActivity = this.getLastActivity();
+                this.startSessionMonitoring();
+            }
+
+            async sha256(message) {
+                const msgBuffer = new TextEncoder().encode(message);
+                const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+                const hashArray = Array.from(new Uint8Array(hashBuffer));
+                return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            }
+
+            generateSecureToken() {
+                const array = new Uint8Array(32);
+                crypto.getRandomValues(array);
+                return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
+            }
+
+            isAccountLocked() {
+                const now = Date.now();
+                return this.lockoutTime && (now < this.lockoutTime);
+            }
+
+            getRemainingLockoutTime() {
+                if (!this.isAccountLocked()) return 0;
+                return Math.ceil((this.lockoutTime - Date.now()) / 1000);
+            }
+
+            recordFailedAttempt() {
+                this.loginAttempts++;
+                localStorage.setItem('admin_login_attempts', this.loginAttempts.toString());
+                
+                if (this.loginAttempts >= SECURITY_CONFIG.MAX_LOGIN_ATTEMPTS) {
+                    this.lockoutTime = Date.now() + SECURITY_CONFIG.LOCKOUT_DURATION;
+                    localStorage.setItem('admin_lockout_time', this.lockoutTime.toString());
+                    this.logSecurityEvent('ACCOUNT_LOCKED', `Account locked after ${this.loginAttempts} failed attempts`);
+                }
+            }
+
+            resetLoginAttempts() {
+                this.loginAttempts = 0;
+                this.lockoutTime = null;
+                localStorage.removeItem('admin_login_attempts');
+                localStorage.removeItem('admin_lockout_time');
+            }
+
+            async validateCredentials(username, password) {
+                const hashedUsername = await this.sha256(username.toLowerCase().trim());
+                const hashedPassword = await this.sha256(password);
+                
+                return hashedUsername === SECURITY_CONFIG.ADMIN_CREDENTIALS.username &&
+                       hashedPassword === SECURITY_CONFIG.ADMIN_CREDENTIALS.password;
+            }
+
+            createSession() {
+                this.sessionToken = this.generateSecureToken();
+                this.lastActivity = Date.now();
+                
+                localStorage.setItem('admin_session_token', this.sessionToken);
+                localStorage.setItem('admin_last_activity', this.lastActivity.toString());
+                localStorage.setItem('admin_session_created', Date.now().toString());
+                
+                this.logSecurityEvent('SESSION_CREATED', 'Admin session created successfully');
+                return this.sessionToken;
+            }
+
+            isValidSession() {
+                if (!this.sessionToken) return false;
+                
+                const now = Date.now();
+                const sessionAge = now - parseInt(localStorage.getItem('admin_session_created') || '0');
+                const timeSinceActivity = now - this.lastActivity;
+                
+                if (sessionAge > SECURITY_CONFIG.SESSION_DURATION) {
+                    this.destroySession();
+                    return false;
+                }
+                
+                if (timeSinceActivity > SECURITY_CONFIG.TOKEN_REFRESH_INTERVAL) {
+                    this.destroySession();
+                    return false;
+                }
+                
+                return true;
+            }
+
+            updateActivity() {
+                if (this.isValidSession()) {
+                    this.lastActivity = Date.now();
+                    localStorage.setItem('admin_last_activity', this.lastActivity.toString());
+                }
+            }
+
+            destroySession() {
+                this.sessionToken = null;
+                this.lastActivity = 0;
+                
+                localStorage.removeItem('admin_session_token');
+                localStorage.removeItem('admin_last_activity');
+                localStorage.removeItem('admin_session_created');
+                
+                this.logSecurityEvent('SESSION_DESTROYED', 'Admin session terminated');
+            }
+
+            logSecurityEvent(eventType, message) {
+                const securityLog = {
+                    timestamp: new Date().toISOString(),
+                    type: eventType,
+                    message: message,
+                    userAgent: navigator.userAgent,
+                    ip: 'client-side'
+                };
+                
+                const logs = JSON.parse(localStorage.getItem('admin_security_logs') || '[]');
+                logs.unshift(securityLog);
+                
+                if (logs.length > 100) {
+                    logs.splice(100);
+                }
+                
+                localStorage.setItem('admin_security_logs', JSON.stringify(logs));
+            }
+
+            getLoginAttempts() {
+                return parseInt(localStorage.getItem('admin_login_attempts') || '0');
+            }
+
+            getLockoutTime() {
+                const stored = localStorage.getItem('admin_lockout_time');
+                return stored ? parseInt(stored) : null;
+            }
+
+            getSessionToken() {
+                return localStorage.getItem('admin_session_token');
+            }
+
+            getLastActivity() {
+                return parseInt(localStorage.getItem('admin_last_activity') || '0');
+            }
+
+            startSessionMonitoring() {
+                setInterval(() => {
+                    if (this.sessionToken && !this.isValidSession()) {
+                        if (document.getElementById('dashboard').classList.contains('active')) {
+                            this.forceLogout();
+                        }
+                    }
+                }, 60000);
+
+                ['click', 'keypress', 'mousemove', 'scroll'].forEach(eventType => {
+                    document.addEventListener(eventType, () => {
+                        if (this.sessionToken) {
+                            this.updateActivity();
+                        }
+                    }, { passive: true });
+                });
+            }
+
+            forceLogout() {
+                this.destroySession();
+                hideDashboard();
+                showNotification('Session expirée pour des raisons de sécurité. Veuillez vous reconnecter.', 'warning');
+                this.logSecurityEvent('FORCED_LOGOUT', 'Session expired - forced logout');
+            }
+
+            getSecurityStats() {
+                const logs = JSON.parse(localStorage.getItem('admin_security_logs') || '[]');
+                const sessionCreated = localStorage.getItem('admin_session_created');
+                
+                return {
+                    totalLogs: logs.length,
+                    recentLogs: logs.slice(0, 10),
+                    sessionAge: sessionCreated ? Date.now() - parseInt(sessionCreated) : 0,
+                    isLocked: this.isAccountLocked(),
+                    lockoutTime: this.getRemainingLockoutTime()
+                };
+            }
+        }
+
+        // Input Sanitization Class
+        class InputSanitizer {
+            static sanitizeString(input) {
+                if (typeof input !== 'string') return '';
+                
+                return input
+                    .trim()
+                    .replace(/[<>]/g, '')
+                    .replace(/javascript:/gi, '')
+                    .replace(/on\w+=/gi, '')
+                    .substring(0, 500);
+            }
+
+            static sanitizeNumber(input, min = 0, max = 999999) {
+                const num = parseInt(input);
+                if (isNaN(num)) return 0;
+                return Math.max(min, Math.min(max, num));
+            }
+
+            static sanitizePhone(phone) {
+                const cleaned = phone.replace(/\D/g, '');
+                if (cleaned.length === 10 && cleaned.startsWith('0')) {
+                    return cleaned;
+                }
+                if (cleaned.length === 9) {
+                    return '0' + cleaned;
+                }
+                return '';
+            }
+        }
+
+        // Rate Limiter Class
+        class RateLimiter {
+            constructor() {
+                this.submissions = new Map();
+            }
+
+            canSubmit(formType, maxSubmissions = 5, windowMs = 60000) {
+                const now = Date.now();
+                const key = `${formType}_${Math.floor(now / windowMs)}`;
+                
+                const current = this.submissions.get(key) || 0;
+                
+                if (current >= maxSubmissions) {
+                    return false;
+                }
+                
+                this.submissions.set(key, current + 1);
+                this.cleanup(windowMs);
+                
+                return true;
+            }
+
+            cleanup(windowMs) {
+                const now = Date.now();
+                const cutoff = Math.floor((now - windowMs * 2) / windowMs);
+                
+                for (const [key] of this.submissions) {
+                    const timestamp = parseInt(key.split('_')[1]);
+                    if (timestamp < cutoff) {
+                        this.submissions.delete(key);
+                    }
+                }
+            }
+        }
+
+        // Backup Manager Class
+        class BackupManager {
+            constructor() {
+                this.setupAutoBackup();
+            }
+
+            createBackup() {
+                const backup = {
+                    timestamp: new Date().toISOString(),
+                    products: products,
+                    orders: orders,
+                    version: '1.0',
+                    checksum: this.calculateChecksum(products, orders)
+                };
+                
+                const backupData = JSON.stringify(backup, null, 2);
+                const blob = new Blob([backupData], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `university-store-backup-${new Date().toISOString().split('T')[0]}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                showNotification('Sauvegarde créée avec succès', 'success');
+                securityManager.logSecurityEvent('BACKUP_CREATED', 'Data backup generated');
+            }
+
+            async restoreBackup(file) {
+                if (!validateAdminAction()) return;
+
+                try {
+                    const text = await file.text();
+                    const backup = JSON.parse(text);
+                    
+                    if (!backup.products || !backup.orders || !backup.timestamp) {
+                        throw new Error('Format de sauvegarde invalide');
+                    }
+                    
+                    const calculatedChecksum = this.calculateChecksum(backup.products, backup.orders);
+                    if (backup.checksum && backup.checksum !== calculatedChecksum) {
+                        throw new Error('Intégrité de la sauvegarde compromise');
+                    }
+                    
+                    if (confirm('Êtes-vous sûr de vouloir restaurer cette sauvegarde ? Toutes les données actuelles seront remplacées.')) {
+                        products = backup.products;
+                        orders = backup.orders;
+                        
+                        saveProducts();
+                        saveOrders();
+                        
+                        displayProducts();
+                        displayProductsList();
+                        displayOrdersList();
+                        
+                        showNotification('Sauvegarde restaurée avec succès', 'success');
+                        securityManager.logSecurityEvent('BACKUP_RESTORED', `Data restored from backup dated ${backup.timestamp}`);
+                    }
+                    
+                } catch (error) {
+                    console.error('Restore error:', error);
+                    showNotification('Erreur lors de la restauration: ' + error.message, 'error');
+                }
+            }
+
+            calculateChecksum(products, orders) {
+                const data = JSON.stringify({ products, orders });
+                let hash = 0;
+                for (let i = 0; i < data.length; i++) {
+                    const char = data.charCodeAt(i);
+                    hash = ((hash << 5) - hash) + char;
+                    hash = hash & hash;
+                }
+                return hash.toString(16);
+            }
+
+            setupAutoBackup() {
+                setInterval(() => {
+                    if (securityManager.isValidSession()) {
+                        const autoBackup = {
+                            timestamp: new Date().toISOString(),
+                            products: products,
+                            orders: orders,
+                            auto: true
+                        };
+                        localStorage.setItem('university_store_auto_backup', JSON.stringify(autoBackup));
+                    }
+                }, 3600000);
+            }
+        }
+
+        // Analytics Class
+        class Analytics {
+            constructor() {
+                this.pageViews = this.getPageViews();
+                this.productViews = this.getProductViews();
+                this.orderAttempts = this.getOrderAttempts();
+            }
+
+            trackPageView() {
+                this.pageViews++;
+                localStorage.setItem('store_page_views', this.pageViews.toString());
+            }
+
+            trackProductView(productId) {
+                this.productViews[productId] = (this.productViews[productId] || 0) + 1;
+                localStorage.setItem('store_product_views', JSON.stringify(this.productViews));
+            }
+
+            trackOrderAttempt(productId, success = false) {
+                const key = `${productId}_${success ? 'success' : 'attempt'}`;
+                this.orderAttempts[key] = (this.orderAttempts[key] || 0) + 1;
+                localStorage.setItem('store_order_attempts', JSON.stringify(this.orderAttempts));
+            }
+
+            getAnalyticsData() {
+                const topProducts = Object.entries(this.productViews)
+                    .sort((a, b) => b[1] - a[1])
+                    .slice(0, 5)
+                    .map(([id, views]) => {
+                        const product = products.find(p => p.id === parseInt(id));
+                        return { name: product?.name || 'Produit supprimé', views };
+                    });
+
+                return {
+                    totalPageViews: this.pageViews,
+                    totalProducts: products.length,
+                    totalOrders: orders.length,
+                    topProducts,
+                    conversionRate: this.calculateConversionRate()
+                };
+            }
+
+            calculateConversionRate() {
+                const totalAttempts = Object.keys(this.orderAttempts)
+                    .filter(key => key.includes('_attempt'))
+                    .reduce((sum, key) => sum + this.orderAttempts[key], 0);
+                
+                const totalSuccess = Object.keys(this.orderAttempts)
+                    .filter(key => key.includes('_success'))
+                    .reduce((sum, key) => sum + this.orderAttempts[key], 0);
+
+                return totalAttempts > 0 ? ((totalSuccess / totalAttempts) * 100).toFixed(1) : 0;
+            }
+
+            getPageViews() {
+                return parseInt(localStorage.getItem('store_page_views') || '0');
+            }
+
+            getProductViews() {
+                return JSON.parse(localStorage.getItem('store_product_views') || '{}');
+            }
+
+            getOrderAttempts() {
+                return JSON.parse(localStorage.getItem('store_order_attempts') || '{}');
+            }
+        }
+
+        // Environment Security Class
+        class EnvironmentSecurity {
+            constructor() {
+                this.initializeSecurityMeasures();
+            }
+
+            initializeSecurityMeasures() {
+                document.addEventListener('contextmenu', (e) => {
+                    if (document.getElementById('dashboard').classList.contains('active')) {
+                        e.preventDefault();
+                        securityManager.logSecurityEvent('SECURITY_ATTEMPT', 'Right-click blocked in admin area');
+                        return false;
+                    }
+                });
+
+                document.addEventListener('keydown', (e) => {
+                    if (document.getElementById('dashboard').classList.contains('active')) {
+                        if (e.key === 'F12' || 
+                            (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i')) ||
+                            (e.ctrlKey && (e.key === 'U' || e.key === 'u'))) {
+                            e.preventDefault();
+                            securityManager.logSecurityEvent('SECURITY_ATTEMPT', 'Dev tools access attempt blocked');
+                            return false;
+                        }
+                    }
+                });
+
+                const style = document.createElement('style');
+                style.textContent = `
+                    .dashboard.active * {
+                        -webkit-user-select: none;
+                        -moz-user-select: none;
+                        -ms-user-select: none;
+                        user-select: none;
+                    }
+                    .dashboard.active input, 
+                    .dashboard.active textarea {
+                        -webkit-user-select: text;
+                        -moz-user-select: text;
+                        -ms-user-select: text;
+                        user-select: text;
+                    }
+                `;
+                document.head.appendChild(style);
+
+                if (window.self !== window.top) {
+                    securityManager.logSecurityEvent('SECURITY_THREAT', 'Page loaded in iframe - potential clickjacking');
+                }
+            }
+
+            clearSensitiveData() {
+                document.querySelectorAll('input[type="password"]').forEach(input => {
+                    input.value = '';
+                });
+                
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText('').catch(() => {});
+                }
+            }
+        }
+
+        // ========== DATA STORAGE ==========
+        
         let products = [
             {
                 id: 1,
@@ -742,114 +1756,6 @@ html>
         let nextOrderId = 1;
         let currentOrderProduct = null;
 
-        // Configuration Google Sheets (remplacez par votre URL d'Apps Script)
-        const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz5N84z6RLiGtDVnrFwPbWECNFZWYRgMZJVqzexnidt_B0Y4w5WdL3L3MeZwG1DNx9S/exec';
-
-        // Fonctions pour Google Sheets
-        async function saveOrderToGoogleSheets(orderData) {
-            try {
-                const response = await fetch(GOOGLE_APPS_SCRIPT_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        action: 'addOrder',
-                        id: orderData.id,
-                        productId: orderData.productId,
-                        productName: orderData.productName,
-                        customerName: orderData.customerName,
-                        customerPrenom: orderData.customerPrenom,
-                        phone: orderData.customerPhone,
-                        wilaya: orderData.wilayaName,
-                        commune: orderData.commune,
-                        date: orderData.orderDate,
-                        status: orderData.status
-                    })
-                });
-                
-                if (!response.ok) {
-                    throw new Error('Erreur lors de l\'envoi à Google Sheets');
-                }
-                
-                return true;
-            } catch (error) {
-                console.error('Erreur Google Sheets:', error);
-                // Sauvegarder localement en cas d'erreur
-                saveToLocalStorage();
-                return false;
-            }
-        }
-
-        async function saveProductToGoogleSheets(productData) {
-            try {
-                const response = await fetch(GOOGLE_APPS_SCRIPT_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        action: 'addProduct',
-                        id: productData.id,
-                        name: productData.name,
-                        price: productData.price,
-                        category: productData.category,
-                        description: productData.description,
-                        emoji: productData.emoji
-                    })
-                });
-                
-                if (!response.ok) {
-                    throw new Error('Erreur lors de l\'envoi à Google Sheets');
-                }
-                
-                return true;
-            } catch (error) {
-                console.error('Erreur Google Sheets:', error);
-                saveToLocalStorage();
-                return false;
-            }
-        }
-
-        // Sauvegarde locale de secours
-        function saveToLocalStorage() {
-            localStorage.setItem('universityStore_products', JSON.stringify(products));
-            localStorage.setItem('universityStore_orders', JSON.stringify(orders));
-            localStorage.setItem('universityStore_nextId', nextId.toString());
-            localStorage.setItem('universityStore_nextOrderId', nextOrderId.toString());
-        }
-
-        function loadFromLocalStorage() {
-            const savedProducts = localStorage.getItem('universityStore_products');
-            const savedOrders = localStorage.getItem('universityStore_orders');
-            const savedNextId = localStorage.getItem('universityStore_nextId');
-            const savedNextOrderId = localStorage.getItem('universityStore_nextOrderId');
-            
-            if (savedProducts) {
-                try {
-                    products = JSON.parse(savedProducts);
-                } catch (e) {
-                    console.error('Erreur lors du chargement des produits:', e);
-                }
-            }
-            
-            if (savedOrders) {
-                try {
-                    orders = JSON.parse(savedOrders);
-                } catch (e) {
-                    console.error('Erreur lors du chargement des commandes:', e);
-                }
-            }
-            
-            if (savedNextId) {
-                nextId = parseInt(savedNextId) || 7;
-            }
-            
-            if (savedNextOrderId) {
-                nextOrderId = parseInt(savedNextOrderId) || 1;
-            }
-        }
-
         // Données des wilayas et communes d'Algérie
         const wilayasData = {
             "01": { name: "Adrar", communes: ["Adrar", "Tamest", "Charouine", "Reggane", "In Salah"] },
@@ -862,76 +1768,321 @@ html>
             "08": { name: "Béchar", communes: ["Béchar", "Kenadsa", "Abadla", "Beni Ounif", "Tabelbala"] },
             "09": { name: "Blida", communes: ["Blida", "Boufarik", "Larbaâ", "Bouinan", "Soumaa"] },
             "10": { name: "Bouira", communes: ["Bouira", "Lakhdaria", "M'Chedallah", "Souk El Khemis", "Kadiria"] },
-            "11": { name: "Tamanrasset", communes: ["Tamanrasset", "In Guezzam", "In Salah", "Tin Zaouatine", "Idles"] },
-            "12": { name: "Tébessa", communes: ["Tébessa", "Cheria", "El Aouinet", "Bir El Ater", "Négrine"] },
-            "13": { name: "Tlemcen", communes: ["Tlemcen", "Maghnia", "Sebdou", "Ghazaouet", "Remchi"] },
-            "14": { name: "Tiaret", communes: ["Tiaret", "Sougueur", "Mahdia", "Frenda", "Ain Deheb"] },
-            "15": { name: "Tizi Ouzou", communes: ["Tizi Ouzou", "Azazga", "Azeffoun", "Tigzirt", "Draa Ben Khedda"] },
             "16": { name: "Alger", communes: ["Alger Centre", "Bab El Oued", "Casbah", "El Madania", "Sidi M'Hamed", "Hussein Dey", "Kouba", "Bir Mourad Raïs"] },
-            "17": { name: "Djelfa", communes: ["Djelfa", "Messaad", "Ain Oussera", "Birine", "Hassi Bahbah"] },
-            "18": { name: "Jijel", communes: ["Jijel", "Ferdjioua", "Mila", "El Aouana", "Ziama Mansouria"] },
-            "19": { name: "Sétif", communes: ["Sétif", "El Eulma", "Ain Azel", "Bougaa", "Hammam Guergour"] },
-            "20": { name: "Saïda", communes: ["Saïda", "Balloul", "Ouled Brahim", "Sidi Boubekeur", "El Hassasna"] },
-            "21": { name: "Skikda", communes: ["Skikda", "Collo", "Azzaba", "El Harrouch", "Stora"] },
-            "22": { name: "Sidi Bel Abbès", communes: ["Sidi Bel Abbès", "Telagh", "Ben Badis", "Tessala", "Mostefa Ben Brahim"] },
-            "23": { name: "Annaba", communes: ["Annaba", "El Hadjar", "Berrahal", "El Bouni", "Sidi Amar"] },
-            "24": { name: "Guelma", communes: ["Guelma", "Bouchegouf", "Hammam Debagh", "Oued Zenati", "Heliopolis"] },
+            "19": { name: "Sétif", communes: ["Sétif", "El Eulma", "Ain Azel", "Bougaa", "Hammam Guergour", "Ain Arnat", "Ain Oulmene"] },
             "25": { name: "Constantine", communes: ["Constantine", "El Khroub", "Ain Smara", "Didouche Mourad", "Zighoud Youcef"] },
-            "26": { name: "Médéa", communes: ["Médéa", "Berrouaghia", "Tablat", "Ouzera", "Ksar El Boukhari"] },
-            "27": { name: "Mostaganem", communes: ["Mostaganem", "Relizane", "Ain Tedeles", "Hassi Mameche", "Stidia"] },
-            "28": { name: "M'Sila", communes: ["M'Sila", "Bou Saada", "Sidi Aissa", "Magra", "Berhoum"] },
-            "29": { name: "Mascara", communes: ["Mascara", "Sig", "Mohammadia", "Tighennif", "Ghriss"] },
-            "30": { name: "Ouargla", communes: ["Ouargla", "Touggourt", "Hassi Messaoud", "Temacine", "N'Goussa"] },
             "31": { name: "Oran", communes: ["Oran", "Bir El Djir", "Es Sénia", "Gdyel", "Ain Turk"] },
-            "32": { name: "El Bayadh", communes: ["El Bayadh", "Rogassa", "Stitten", "Brezina", "Boualem"] },
-            "33": { name: "Illizi", communes: ["Illizi", "Djanet", "In Amenas", "Bordj Omar Driss", "Debdeb"] },
-            "34": { name: "Bordj Bou Arréridj", communes: ["Bordj Bou Arréridj", "Ras El Oued", "Bordj Ghdir", "El M'Hir", "Mansoura"] },
             "35": { name: "Boumerdès", communes: ["Boumerdès", "Dellys", "Naciria", "Khemis El Khechna", "Boudouaou"] },
-            "36": { name: "El Tarf", communes: ["El Tarf", "El Kala", "Bouhadjar", "Ben M'Hidi", "Boutheldja"] },
-            "37": { name: "Tindouf", communes: ["Tindouf", "Oum El Assel", "Hassi Khenig"] },
-            "38": { name: "Tissemsilt", communes: ["Tissemsilt", "Theniet El Had", "Bordj Bou Naama", "Lazharia", "Khemisti"] },
-            "39": { name: "El Oued", communes: ["El Oued", "Robbah", "Guemar", "Reguiba", "Still"] },
-            "40": { name: "Khenchela", communes: ["Khenchela", "Kais", "Baghai", "El Hamma", "Ensigha"] },
-            "41": { name: "Souk Ahras", communes: ["Souk Ahras", "Sedrata", "M'Daourouch", "Bir Bouhouche", "Taoura"] },
-            "42": { name: "Tipaza", communes: ["Tipaza", "Cherchell", "Menaceur", "Ahmer El Ain", "Bouharoun"] },
-            "43": { name: "Mila", communes: ["Mila", "Ferdjioua", "Chelghoum Laid", "Oued Athmania", "Grarem Gouga"] },
-            "44": { name: "Ain Defla", communes: ["Ain Defla", "Khemis Miliana", "El Attaf", "Boumedfaa", "Djelida"] },
-            "45": { name: "Naâma", communes: ["Naâma", "Mecheria", "Ain Sefra", "Tiout", "Sfissifa"] },
-            "46": { name: "Ain Témouchent", communes: ["Ain Témouchent", "Hammam Bou Hadjar", "Beni Saf", "El Malah", "Ouled Boudjemaa"] },
-            "47": { name: "Ghardaïa", communes: ["Ghardaïa", "El Menia", "Berriane", "Metlili", "El Atteuf"] },
-            "48": { name: "Relizane", communes: ["Relizane", "Mazouna", "Oued Rhiou", "Yellel", "Sidi M'Hamed Ben Ali"] }
+            "42": { name: "Tipaza", communes: ["Tipaza", "Cherchell", "Menaceur", "Ahmer El Ain", "Bouharoun"] }
         };
 
-        // Fonctions d'authentification
+        // Initialize security and utility classes
+        const securityManager = new SecurityManager();
+        const rateLimiter = new RateLimiter();
+        const backupManager = new BackupManager();
+        const analytics = new Analytics();
+        const environmentSecurity = new EnvironmentSecurity();
+
+        // ========== DATA STORAGE FUNCTIONS ==========
+        
+        function saveProducts() {
+            localStorage.setItem('university_store_products', JSON.stringify(products));
+        }
+
+        function loadProducts() {
+            const saved = localStorage.getItem('university_store_products');
+            if (saved) {
+                products = JSON.parse(saved);
+            }
+        }
+
+        function saveOrders() {
+            localStorage.setItem('university_store_orders', JSON.stringify(orders));
+        }
+
+        function loadOrders() {
+            const saved = localStorage.getItem('university_store_orders');
+            if (saved) {
+                orders = JSON.parse(saved);
+            }
+        }
+
+        // ========== GOOGLE SHEETS INTEGRATION ==========
+        
+        async function sendOrderToGoogleSheets(orderData) {
+            try {
+                const response = await fetch(GOOGLE_APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(orderData),
+                    mode: 'no-cors'
+                });
+
+                console.log('Order sent to Google Sheets successfully');
+                
+            } catch (error) {
+                console.error('Error sending order to Google Sheets:', error);
+                showNotification('Commande sauvegardée localement. Problème de connexion avec la base de données.', 'warning');
+            }
+        }
+
+        // ========== FORM VALIDATION ==========
+        
+        function validateProductForm() {
+            const name = InputSanitizer.sanitizeString(document.getElementById('productName').value);
+            const price = InputSanitizer.sanitizeNumber(document.getElementById('productPrice').value, 1, 999999);
+            const category = document.getElementById('productCategory').value;
+            const description = InputSanitizer.sanitizeString(document.getElementById('productDescription').value);
+            const emoji = InputSanitizer.sanitizeString(document.getElementById('productEmoji').value);
+
+            const errors = [];
+
+            if (name.length < 3) {
+                errors.push('Le nom du produit doit contenir au moins 3 caractères');
+            }
+
+            if (price < 1) {
+                errors.push('Le prix doit être supérieur à 0 DZD');
+            }
+
+            if (!['habillement', 'electronique', 'accessoires'].includes(category)) {
+                errors.push('Catégorie invalide');
+            }
+
+            if (description.length < 10) {
+                errors.push('La description doit contenir au moins 10 caractères');
+            }
+
+            if (emoji && emoji.length > 10) {
+                errors.push('L\'emoji est trop long');
+            }
+
+            return {
+                isValid: errors.length === 0,
+                errors: errors,
+                sanitizedData: { name, price, category, description, emoji }
+            };
+        }
+
+        function validateOrderForm() {
+            const nom = InputSanitizer.sanitizeString(document.getElementById('orderName').value);
+            const prenom = InputSanitizer.sanitizeString(document.getElementById('orderPrenom').value);
+            const phone = InputSanitizer.sanitizePhone(document.getElementById('orderPhone').value);
+            const wilaya = document.getElementById('orderWilaya').value;
+            const commune = InputSanitizer.sanitizeString(document.getElementById('orderCommune').value);
+
+            const errors = [];
+
+            if (nom.length < 2) {
+                errors.push('Le nom doit contenir au moins 2 caractères');
+            }
+
+            if (prenom.length < 2) {
+                errors.push('Le prénom doit contenir au moins 2 caractères');
+            }
+
+            if (!phone || phone.length !== 10) {
+                errors.push('Numéro de téléphone invalide (format: 0XXXXXXXXX)');
+            }
+
+            if (!wilayasData[wilaya]) {
+                errors.push('Wilaya invalide');
+            }
+
+            if (!commune || commune.length < 2) {
+                errors.push('Commune invalide');
+            }
+
+            return {
+                isValid: errors.length === 0,
+                errors: errors,
+                sanitizedData: { nom, prenom, phone, wilaya, commune }
+            };
+        }
+
+        function validateAdminAction() {
+            if (!securityManager.isValidSession()) {
+                showNotification('Session expirée. Action non autorisée.', 'error');
+                securityManager.forceLogout();
+                return false;
+            }
+            securityManager.updateActivity();
+            return true;
+        }
+
+        // ========== UI FUNCTIONS ==========
+        
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+
+            const reveals = document.querySelectorAll('.scroll-reveal');
+            reveals.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                if (elementTop < windowHeight - 100) {
+                    element.classList.add('active');
+                }
+            });
+        });
+
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        function scrollToProducts() {
+            document.getElementById('produits').scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+
+        // ========== AUTHENTICATION ==========
+        
         function showLoginModal() {
             document.getElementById('loginModal').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('username').focus();
+            }, 100);
         }
 
         function closeLoginModal() {
             document.getElementById('loginModal').style.display = 'none';
-            document.getElementById('loginError').textContent = '';
+            document.getElementById('loginError').style.display = 'none';
             document.getElementById('username').value = '';
             document.getElementById('password').value = '';
         }
 
-        function login() {
-            const username = document.getElementById('username').value;
+        async function login() {
+            const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value;
+            const errorElement = document.getElementById('loginError');
             
-            if (username === 'younes' && password === 'Its.that.person.7') {
-                closeLoginModal();
-                showDashboard();
-            } else {
-                document.getElementById('loginError').textContent = 'Nom d\'utilisateur ou mot de passe incorrect';
+            errorElement.style.display = 'none';
+            
+            if (securityManager.isAccountLocked()) {
+                const remainingTime = securityManager.getRemainingLockoutTime();
+                const minutes = Math.floor(remainingTime / 60);
+                const seconds = remainingTime % 60;
+                
+                errorElement.innerHTML = `
+                    <strong>⚠️ Compte verrouillé</strong><br>
+                    Trop de tentatives de connexion échouées.<br>
+                    Réessayez dans ${minutes}m ${seconds}s
+                `;
+                errorElement.style.display = 'block';
+                
+                const countdown = setInterval(() => {
+                    const remaining = securityManager.getRemainingLockoutTime();
+                    if (remaining <= 0) {
+                        clearInterval(countdown);
+                        errorElement.style.display = 'none';
+                    } else {
+                        const min = Math.floor(remaining / 60);
+                        const sec = remaining % 60;
+                        errorElement.innerHTML = `
+                            <strong>⚠️ Compte verrouillé</strong><br>
+                            Trop de tentatives de connexion échouées.<br>
+                            Réessayez dans ${min}m ${sec}s
+                        `;
+                    }
+                }, 1000);
+                
+                return;
+            }
+            
+            if (!username || !password) {
+                errorElement.textContent = 'Veuillez saisir le nom d\'utilisateur et le mot de passe';
+                errorElement.style.display = 'block';
+                return;
+            }
+            
+            const loginButton = document.querySelector('.submit-btn');
+            const originalText = loginButton.innerHTML;
+            loginButton.innerHTML = '<span class="loading"></span> Connexion...';
+            loginButton.disabled = true;
+            
+            try {
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                const isValid = await securityManager.validateCredentials(username, password);
+                
+                if (isValid) {
+                    securityManager.resetLoginAttempts();
+                    securityManager.createSession();
+                    
+                    closeLoginModal();
+                    showDashboard();
+                    showNotification('Connexion réussie - Session sécurisée active', 'success');
+                    
+                } else {
+                    securityManager.recordFailedAttempt();
+                    securityManager.logSecurityEvent('LOGIN_FAILED', `Failed login attempt for username: ${username}`);
+                    
+                    const remainingAttempts = SECURITY_CONFIG.MAX_LOGIN_ATTEMPTS - securityManager.loginAttempts;
+                    
+                    if (remainingAttempts > 0) {
+                        errorElement.innerHTML = `
+                            <strong>❌ Identifiants incorrects</strong><br>
+                            ${remainingAttempts} tentative(s) restante(s) avant verrouillage
+                        `;
+                    } else {
+                        errorElement.innerHTML = `
+                            <strong>⚠️ Compte verrouillé</strong><br>
+                            Trop de tentatives échouées. Réessayez dans 15 minutes.
+                        `;
+                    }
+                    errorElement.style.display = 'block';
+                    
+                    document.getElementById('password').value = '';
+                }
+                
+            } catch (error) {
+                console.error('Login error:', error);
+                errorElement.textContent = 'Erreur de connexion. Veuillez réessayer.';
+                errorElement.style.display = 'block';
+                
+            } finally {
+                loginButton.innerHTML = originalText;
+                loginButton.disabled = false;
             }
         }
 
         function logout() {
-            hideDashboard();
+            if (confirm('Voulez-vous vraiment vous déconnecter ?')) {
+                securityManager.destroySession();
+                hideDashboard();
+                showNotification('Déconnexion sécurisée effectuée', 'success');
+            }
         }
 
-        // Fonctions du dashboard
+        // ========== DASHBOARD ==========
+        
         function showDashboard() {
+            if (!securityManager.isValidSession()) {
+                showNotification('Session expirée. Veuillez vous reconnecter.', 'warning');
+                showLoginModal();
+                return;
+            }
+            
             const mainContent = document.getElementById('mainContent');
             const dashboard = document.getElementById('dashboard');
             const header = document.querySelector('.header');
@@ -941,8 +2092,10 @@ html>
             mainContent.style.display = 'none';
             header.style.display = 'none';
             footer.style.display = 'none';
+            
             displayProductsList();
             displayOrdersList();
+            displaySecurityDashboard();
         }
 
         function hideDashboard() {
@@ -957,35 +2110,42 @@ html>
             footer.style.display = 'block';
         }
 
-        function showDashSection(section) {
-            // Cacher toutes les sections
+        function showDashSection(section, event) {
             document.querySelectorAll('.dashboard-section').forEach(sec => {
                 sec.classList.remove('active');
             });
             
-            // Désactiver tous les boutons de navigation
             document.querySelectorAll('.dash-nav-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
             
-            // Afficher la section demandée
             document.getElementById(section + 'Section').classList.add('active');
             
-            // Activer le bouton correspondant
-            event.target.classList.add('active');
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
+
+            // Load section-specific content
+            if (section === 'analytics') {
+                displayAnalytics();
+            } else if (section === 'security') {
+                displaySecurityDashboard();
+            }
         }
 
-        // Fonctions pour les produits
+        // ========== PRODUCT MANAGEMENT ==========
+        
         function displayProducts() {
             const productGrid = document.getElementById('productGrid');
             productGrid.innerHTML = '';
 
-            products.forEach(product => {
+            products.forEach((product, index) => {
                 const productCard = document.createElement('div');
                 productCard.className = 'product-card';
+                productCard.style.animationDelay = (index * 0.1) + 's';
                 
                 const imageContent = product.image 
-                    ? `<img src="${product.image}" alt="${product.name}">`
+                    ? `<img src="${product.image}" alt="${product.name}" style="width: 100%; height: 100%; object-fit: cover;">`
                     : (product.emoji || '📦');
 
                 productCard.innerHTML = `
@@ -994,7 +2154,9 @@ html>
                         <div class="product-name">${product.name}</div>
                         <div class="product-price">${product.price.toLocaleString()} DZD</div>
                         <div class="product-description">${product.description}</div>
-                        <button class="order-now" onclick="openOrderModal(${product.id})">Commander maintenant</button>
+                        <button class="order-now" onclick="openOrderModal(${product.id})">
+                            <span style="position: relative; z-index: 1;">Commander maintenant</span>
+                        </button>
                     </div>
                 `;
                 productGrid.appendChild(productCard);
@@ -1005,14 +2167,19 @@ html>
             const productsList = document.getElementById('productsList');
             productsList.innerHTML = '';
 
+            if (products.length === 0) {
+                productsList.innerHTML = '<p style="opacity: 0.7;">Aucun produit disponible</p>';
+                return;
+            }
+
             products.forEach(product => {
                 const productItem = document.createElement('div');
                 productItem.className = 'product-item';
                 productItem.innerHTML = `
                     <div>
-                        <strong>${product.emoji || '📦'} ${product.name}</strong>
+                        <strong style="font-size: 1.2rem;">${product.emoji || '📦'} ${product.name}</strong>
                         <br>
-                        <small>${product.price.toLocaleString()} DZD - ${product.category}</small>
+                        <small style="opacity: 0.8;">${product.price.toLocaleString()} DZD - ${product.category}</small>
                     </div>
                     <button class="delete-btn" onclick="deleteProduct(${product.id})">Supprimer</button>
                 `;
@@ -1037,78 +2204,21 @@ html>
             }
         }
 
-        // Ajouter un produit
-        document.getElementById('addProductForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('productName').value;
-            const price = parseInt(document.getElementById('productPrice').value);
-            const category = document.getElementById('productCategory').value;
-            const description = document.getElementById('productDescription').value;
-            const emoji = document.getElementById('productEmoji').value || '📦';
-            const imageFile = document.getElementById('productImage').files[0];
-
-            let imageDataURL = null;
-            
-            if (imageFile) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    imageDataURL = e.target.result;
-                    
-                    const newProduct = {
-                        id: nextId++,
-                        name: name,
-                        price: price,
-                        category: category,
-                        description: description,
-                        emoji: emoji,
-                        image: imageDataURL
-                    };
-
-                    products.push(newProduct);
-                    displayProducts();
-                    displayProductsList();
-                    
-                    // Reset form
-                    document.getElementById('addProductForm').reset();
-                    document.getElementById('imagePreview').style.display = 'none';
-                    
-                    alert('Produit ajouté avec succès !');
-                };
-                reader.readAsDataURL(imageFile);
-            } else {
-                const newProduct = {
-                    id: nextId++,
-                    name: name,
-                    price: price,
-                    category: category,
-                    description: description,
-                    emoji: emoji,
-                    image: null
-                };
-
-                products.push(newProduct);
-                displayProducts();
-                displayProductsList();
-                
-                // Reset form
-                this.reset();
-                document.getElementById('imagePreview').style.display = 'none';
-                
-                alert('Produit ajouté avec succès !');
-            }
-        });
-
-        // Supprimer un produit
         function deleteProduct(id) {
+            if (!validateAdminAction()) return;
+            
             if (confirm('Êtes-vous sûr de vouloir supprimer ce produit ?')) {
                 products = products.filter(product => product.id !== id);
+                saveProducts();
                 displayProducts();
                 displayProductsList();
+                securityManager.logSecurityEvent('PRODUCT_DELETED', `Product with ID ${id} deleted`);
+                showNotification('Produit supprimé', 'success');
             }
         }
 
-        // Fonctions pour les commandes
+        // ========== ORDER MANAGEMENT ==========
+        
         function loadWilayas() {
             const wilayaSelect = document.getElementById('orderWilaya');
             wilayaSelect.innerHTML = '<option value="">Sélectionner une wilaya</option>';
@@ -1140,6 +2250,7 @@ html>
         function openOrderModal(productId) {
             currentOrderProduct = products.find(p => p.id === productId);
             if (currentOrderProduct) {
+                analytics.trackProductView(productId);
                 document.getElementById('orderModal').style.display = 'block';
                 loadWilayas();
             }
@@ -1151,55 +2262,33 @@ html>
             currentOrderProduct = null;
         }
 
-        // Traitement des commandes
-        document.getElementById('orderFormElement').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const orderData = {
-                id: nextOrderId++,
-                productId: currentOrderProduct.id,
-                productName: currentOrderProduct.name,
-                productPrice: currentOrderProduct.price,
-                customerName: document.getElementById('orderName').value,
-                customerPrenom: document.getElementById('orderPrenom').value,
-                customerPhone: document.getElementById('orderPhone').value,
-                wilayaCode: document.getElementById('orderWilaya').value,
-                wilayaName: wilayasData[document.getElementById('orderWilaya').value].name,
-                commune: document.getElementById('orderCommune').value,
-                orderDate: new Date().toLocaleString('fr-FR'),
-                status: 'En attente'
-            };
-
-            orders.unshift(orderData); // Ajouter au début pour l'ordre chronologique
-            closeOrderModal();
-            alert('Commande passée avec succès ! Vous serez contacté bientôt.');
-        });
-
         function displayOrdersList() {
             const ordersList = document.getElementById('ordersList');
             ordersList.innerHTML = '';
 
             if (orders.length === 0) {
-                ordersList.innerHTML = '<p>Aucune commande pour le moment.</p>';
+                ordersList.innerHTML = '<p style="opacity: 0.7;">Aucune commande pour le moment.</p>';
                 return;
             }
 
             orders.forEach(order => {
                 const orderItem = document.createElement('div');
                 orderItem.className = 'order-item';
+                orderItem.style.flexDirection = 'column';
+                orderItem.style.alignItems = 'flex-start';
                 orderItem.innerHTML = `
-                    <div class="order-header">
-                        <strong>Commande #${order.id} - ${order.customerPrenom} ${order.customerName}</strong>
-                        <span class="order-date">${order.orderDate}</span>
+                    <div style="display: flex; justify-content: space-between; width: 100%; margin-bottom: 1rem;">
+                        <strong style="font-size: 1.2rem;">Commande #${order.id}</strong>
+                        <span style="opacity: 0.7;">${order.orderDate}</span>
                     </div>
-                    <div class="order-details">
+                    <div style="width: 100%; background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px;">
                         <p><strong>Produit:</strong> ${order.productName} - ${order.productPrice.toLocaleString()} DZD</p>
                         <p><strong>Client:</strong> ${order.customerPrenom} ${order.customerName}</p>
                         <p><strong>Téléphone:</strong> ${order.customerPhone}</p>
                         <p><strong>Adresse:</strong> ${order.commune}, ${order.wilayaName}</p>
                         <p><strong>Statut:</strong> <span style="color: ${order.status === 'Finalisée' ? '#27ae60' : '#f39c12'}">${order.status}</span></p>
                     </div>
-                    <div class="order-actions">
+                    <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
                         ${order.status === 'En attente' ? `<button class="finalize-btn" onclick="finalizeOrder(${order.id})">Finaliser</button>` : ''}
                         <button class="delete-btn" onclick="deleteOrder(${order.id})">Supprimer</button>
                     </div>
@@ -1209,23 +2298,308 @@ html>
         }
 
         function finalizeOrder(orderId) {
+            if (!validateAdminAction()) return;
+            
             if (confirm('Marquer cette commande comme finalisée ?')) {
                 const order = orders.find(o => o.id === orderId);
                 if (order) {
                     order.status = 'Finalisée';
+                    saveOrders();
                     displayOrdersList();
+                    securityManager.logSecurityEvent('ORDER_FINALIZED', `Order #${orderId} finalized`);
+                    showNotification('Commande finalisée avec succès', 'success');
                 }
             }
         }
 
         function deleteOrder(orderId) {
+            if (!validateAdminAction()) return;
+            
             if (confirm('Supprimer définitivement cette commande ?')) {
                 orders = orders.filter(o => o.id !== orderId);
+                saveOrders();
                 displayOrdersList();
+                securityManager.logSecurityEvent('ORDER_DELETED', `Order #${orderId} deleted`);
+                showNotification('Commande supprimée', 'success');
             }
         }
 
-        // Gestion des clics en dehors des modals
+        // ========== ANALYTICS ==========
+        
+        function displayAnalytics() {
+            const analyticsContent = document.getElementById('analyticsContent');
+            const data = analytics.getAnalyticsData();
+            
+            analyticsContent.innerHTML = `
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                    <div style="background: rgba(52, 152, 219, 0.2); padding: 1.5rem; border-radius: 12px; text-align: center;">
+                        <h4 style="color: #3498db; margin-bottom: 0.5rem;">👥 Visiteurs</h4>
+                        <div style="font-size: 2rem; font-weight: bold;">${data.totalPageViews}</div>
+                        <small style="opacity: 0.7;">Total des vues</small>
+                    </div>
+                    
+                    <div style="background: rgba(155, 89, 182, 0.2); padding: 1.5rem; border-radius: 12px; text-align: center;">
+                        <h4 style="color: #9b59b6; margin-bottom: 0.5rem;">📦 Produits</h4>
+                        <div style="font-size: 2rem; font-weight: bold;">${data.totalProducts}</div>
+                        <small style="opacity: 0.7;">Produits actifs</small>
+                    </div>
+                    
+                    <div style="background: rgba(39, 174, 96, 0.2); padding: 1.5rem; border-radius: 12px; text-align: center;">
+                        <h4 style="color: #27ae60; margin-bottom: 0.5rem;">🛒 Commandes</h4>
+                        <div style="font-size: 2rem; font-weight: bold;">${data.totalOrders}</div>
+                        <small style="opacity: 0.7;">Total commandes</small>
+                    </div>
+                    
+                    <div style="background: rgba(230, 126, 34, 0.2); padding: 1.5rem; border-radius: 12px; text-align: center;">
+                        <h4 style="color: #e67e22; margin-bottom: 0.5rem;">📈 Conversion</h4>
+                        <div style="font-size: 2rem; font-weight: bold;">${data.conversionRate}%</div>
+                        <small style="opacity: 0.7;">Taux de conversion</small>
+                    </div>
+                </div>
+                
+                <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 12px;">
+                    <h4 style="margin-bottom: 1rem;">🏆 Produits Populaires</h4>
+                    ${data.topProducts.length > 0 ? 
+                        data.topProducts.map((product, index) => `
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.8rem; margin-bottom: 0.5rem; background: rgba(255,255,255,0.05); border-radius: 8px;">
+                                <span>${index + 1}. ${product.name}</span>
+                                <span style="background: rgba(52, 152, 219, 0.3); padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.9rem;">
+                                    ${product.views} vues
+                                </span>
+                            </div>
+                        `).join('') : 
+                        '<p style="opacity: 0.7;">Aucune donnée disponible</p>'
+                    }
+                </div>
+            `;
+        }
+
+        // ========== SECURITY DASHBOARD ==========
+        
+        function displaySecurityDashboard() {
+            const stats = securityManager.getSecurityStats();
+            
+            const securityStats = document.getElementById('securityStats');
+            const sessionAge = Math.floor(stats.sessionAge / (1000 * 60));
+            
+            securityStats.innerHTML = `
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                    <div style="background: rgba(39, 174, 96, 0.2); padding: 1rem; border-radius: 8px; border-left: 4px solid #27ae60;">
+                        <strong>Session Active</strong><br>
+                        <span style="font-size: 1.2rem;">${sessionAge} minutes</span>
+                    </div>
+                    <div style="background: rgba(52, 152, 219, 0.2); padding: 1rem; border-radius: 8px; border-left: 4px solid #3498db;">
+                        <strong>Événements Sécurité</strong><br>
+                        <span style="font-size: 1.2rem;">${stats.totalLogs}</span>
+                    </div>
+                    <div style="background: ${stats.isLocked ? 'rgba(231, 76, 60, 0.2)' : 'rgba(46, 204, 113, 0.2)'}; padding: 1rem; border-radius: 8px; border-left: 4px solid ${stats.isLocked ? '#e74c3c' : '#2ecc71'};">
+                        <strong>Statut Compte</strong><br>
+                        <span style="font-size: 1.2rem;">${stats.isLocked ? '🔒 Verrouillé' : '✅ Actif'}</span>
+                    </div>
+                </div>
+            `;
+            
+            const securityLogs = document.getElementById('securityLogs');
+            securityLogs.innerHTML = `
+                <h4 style="margin-bottom: 1rem;">Journaux de Sécurité Récents</h4>
+                <div style="max-height: 300px; overflow-y: auto;">
+                    ${stats.recentLogs.map(log => `
+                        <div style="background: rgba(255,255,255,0.05); padding: 1rem; margin-bottom: 0.5rem; border-radius: 8px; border-left: 3px solid ${getLogColor(log.type)};">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <strong>${getLogIcon(log.type)} ${log.type}</strong>
+                                <small style="opacity: 0.7;">${new Date(log.timestamp).toLocaleString('fr-FR')}</small>
+                            </div>
+                            <div style="opacity: 0.9;">${log.message}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function getLogColor(type) {
+            const colors = {
+                'SESSION_CREATED': '#27ae60',
+                'SESSION_DESTROYED': '#3498db',
+                'LOGIN_FAILED': '#e74c3c',
+                'ACCOUNT_LOCKED': '#e67e22',
+                'FORCED_LOGOUT': '#9b59b6'
+            };
+            return colors[type] || '#95a5a6';
+        }
+
+        function getLogIcon(type) {
+            const icons = {
+                'SESSION_CREATED': '✅',
+                'SESSION_DESTROYED': '🚪',
+                'LOGIN_FAILED': '❌',
+                'ACCOUNT_LOCKED': '🔒',
+                'FORCED_LOGOUT': '⚠️'
+            };
+            return icons[type] || '📝';
+        }
+
+        // ========== NOTIFICATION SYSTEM ==========
+        
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `message ${type}-message`;
+            notification.textContent = message;
+            notification.style.position = 'fixed';
+            notification.style.top = '100px';
+            notification.style.right = '20px';
+            notification.style.zIndex = '3000';
+            notification.style.minWidth = '250px';
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    notification.remove();
+                }, 500);
+            }, 3000);
+        }
+
+        // ========== BACKUP UTILITIES ==========
+        
+        function handleRestore() {
+            const fileInput = document.getElementById('restoreFile');
+            if (fileInput.files.length === 0) {
+                showNotification('Veuillez sélectionner un fichier de sauvegarde', 'warning');
+                return;
+            }
+            
+            backupManager.restoreBackup(fileInput.files[0]);
+        }
+
+        // ========== FORM HANDLERS ==========
+        
+        document.getElementById('addProductForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!validateAdminAction()) return;
+            
+            if (!rateLimiter.canSubmit('add_product', 10, 60000)) {
+                showNotification('Trop de soumissions rapides. Attendez un moment.', 'warning');
+                return;
+            }
+            
+            const validation = validateProductForm();
+            if (!validation.isValid) {
+                showNotification('Erreurs de validation:\n' + validation.errors.join('\n'), 'error');
+                return;
+            }
+            
+            const { name, price, category, description, emoji } = validation.sanitizedData;
+            const imageFile = document.getElementById('productImage').files[0];
+
+            if (imageFile) {
+                const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+                const maxSize = 2 * 1024 * 1024;
+
+                if (!allowedTypes.includes(imageFile.type)) {
+                    showNotification('Type de fichier non autorisé. Utilisez JPG, PNG, GIF ou WebP.', 'error');
+                    return;
+                }
+
+                if (imageFile.size > maxSize) {
+                    showNotification('Fichier trop volumineux. Maximum 2MB autorisé.', 'error');
+                    return;
+                }
+            }
+            
+            const addProduct = (imageData) => {
+                const newProduct = {
+                    id: nextId++,
+                    name: name,
+                    price: price,
+                    category: category,
+                    description: description,
+                    emoji: emoji || '📦',
+                    image: imageData,
+                    createdAt: new Date().toISOString(),
+                    createdBy: 'admin'
+                };
+
+                products.push(newProduct);
+                saveProducts();
+                displayProducts();
+                displayProductsList();
+                
+                document.getElementById('addProductForm').reset();
+                document.getElementById('imagePreview').style.display = 'none';
+                
+                securityManager.logSecurityEvent('PRODUCT_ADDED', `Product "${name}" added successfully`);
+                showNotification('Produit ajouté avec succès !', 'success');
+            };
+
+            if (imageFile) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    addProduct(e.target.result);
+                };
+                reader.readAsDataURL(imageFile);
+            } else {
+                addProduct(null);
+            }
+        });
+
+        document.getElementById('orderFormElement').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!rateLimiter.canSubmit('place_order', 3, 300000)) {
+                showNotification('Limite de commandes atteinte. Veuillez attendre avant de passer une nouvelle commande.', 'warning');
+                return;
+            }
+            
+            const validation = validateOrderForm();
+            if (!validation.isValid) {
+                let errorMsg = 'Veuillez corriger les erreurs suivantes:\n';
+                validation.errors.forEach(error => {
+                    errorMsg += '• ' + error + '\n';
+                });
+                showNotification(errorMsg, 'error');
+                return;
+            }
+            
+            if (!currentOrderProduct) {
+                showNotification('Erreur: Produit non sélectionné', 'error');
+                return;
+            }
+            
+            const { nom, prenom, phone, wilaya, commune } = validation.sanitizedData;
+            
+            const orderData = {
+                id: nextOrderId++,
+                productId: currentOrderProduct.id,
+                productName: currentOrderProduct.name,
+                productPrice: currentOrderProduct.price,
+                customerName: nom,
+                customerPrenom: prenom,
+                customerPhone: phone,
+                wilayaCode: wilaya,
+                wilayaName: wilayasData[wilaya].name,
+                commune: commune,
+                orderDate: new Date().toLocaleString('fr-FR'),
+                status: 'En attente',
+                ipAddress: 'client-side',
+                userAgent: navigator.userAgent.substring(0, 100)
+            };
+
+            orders.unshift(orderData);
+            saveOrders();
+            
+            sendOrderToGoogleSheets(orderData);
+            
+            analytics.trackOrderAttempt(currentOrderProduct.id, true);
+            securityManager.logSecurityEvent('ORDER_PLACED', `Order #${orderData.id} placed for ${orderData.productName}`);
+            
+            closeOrderModal();
+            showNotification('Commande passée avec succès ! Vous serez contacté bientôt.', 'success');
+        });
+
+        // ========== EVENT LISTENERS ==========
+        
         window.onclick = function(event) {
             const loginModal = document.getElementById('loginModal');
             const orderModal = document.getElementById('orderModal');
@@ -1238,10 +2612,25 @@ html>
             }
         }
 
-        // Initialisation
-        displayProducts();
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeLoginModal();
+                closeOrderModal();
+            }
+        });
 
-        // Smooth scroll pour la navigation
+        document.getElementById('username').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('password').focus();
+            }
+        });
+
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                login();
+            }
+        });
+
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -1255,18 +2644,36 @@ html>
             });
         });
 
-        // Gestion des touches Enter pour les modals
-        document.getElementById('username').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                document.getElementById('password').focus();
+        window.addEventListener('beforeunload', function() {
+            environmentSecurity.clearSensitiveData();
+            
+            if (products && orders) {
+                saveProducts();
+                saveOrders();
             }
         });
 
-        document.getElementById('password').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                login();
+        // ========== INITIALIZATION ==========
+        
+        window.addEventListener('load', function() {
+            loadProducts();
+            loadOrders();
+            displayProducts();
+            createParticles();
+            analytics.trackPageView();
+            
+            if (document.getElementById('dashboard').classList.contains('active')) {
+                displayProductsList();
+                displayOrdersList();
             }
+            document.body.style.opacity = '1';
         });
+
+        console.log('🔒 Enhanced Security System Loaded');
+        console.log('💾 Backup System Ready');
+        console.log('📊 Analytics System Active');
+        console.log('🛡️ Environment Security Enabled');
+        
     </script>
 </body>
 </html>
