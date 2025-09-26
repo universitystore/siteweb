@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎓 University Store – Ton style, ta technologie</title>
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>🎓 University Store – Ton style, ta technologie</title>
+<style>
         * {
             margin: 0;
             padding: 0;
@@ -147,7 +148,7 @@
             font-weight: bold;
             background: linear-gradient(45deg, #667eea, #764ba2);
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            -webkit-text-fill-color: white;
             animation: pulse 2s ease-in-out infinite;
         }
 
@@ -243,7 +244,7 @@
             animation: fadeInUp 1s ease-out;
             background: linear-gradient(45deg, #fff, #f0f0f0);
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            -webkit-text-fill-color: white;
         }
 
         @keyframes fadeInUp {
@@ -455,7 +456,7 @@
             font-size: 1.8rem;
             background: linear-gradient(45deg, #667eea, #764ba2);
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            -webkit-text-fill-color: white;
             font-weight: bold;
             margin-bottom: 1rem;
             animation: pulse 2s ease-in-out infinite;
@@ -961,264 +962,240 @@
     </style>
 </head>
 <body>
-    <!-- Animated Background -->
-    <div class="bg-animation"></div>
-    <div class="particles" id="particles"></div>
-
-    <!-- Header -->
-    <header class="header" id="header">
-        <nav class="nav">
-            <div class="logo">🎓 University Store</div>
-            <button class="mobile-menu" onclick="toggleMobileMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#accueil">Accueil</a></li>
-                <li><a href="#produits">Produits</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <button class="admin-btn" onclick="showLoginModal()">
-                <span>Admin</span>
-            </button>
-        </nav>
-    </header>
-
-    <!-- Main Content -->
-    <main class="main-content" id="mainContent">
-        <!-- Hero Section -->
-        <section class="hero" id="accueil">
-            <h1>🎓 University Store</h1>
-            <p>Ton style, ta technologie. Découvrez notre collection d'habillement homme tendance et d'accessoires électroniques pratiques.</p>
-            <p style="font-size: 1rem; opacity: 0.8;">✨ Qualité garantie – Prix étudiés pour les étudiants algériens</p>
-            <button class="cta-button" onclick="scrollToProducts()">
-                <span>Découvrir nos produits →</span>
-            </button>
-        </section>
-
-        <!-- Products Section -->
-        <section class="products" id="produits">
-            <div class="container">
-                <h2 class="section-title scroll-reveal">Nos Produits Premium</h2>
-                <div class="product-grid" id="productGrid">
-                    <!-- Les produits seront ajoutés dynamiquement -->
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer" id="contact">
-        <div class="footer-info">
-            <p style="font-size: 1.2rem; margin-bottom: 1rem;">📍 Disponible partout en Algérie</p>
-            <p>🚚 Livraison rapide et sécurisée</p>
-            <p>💎 Qualité premium garantie</p>
-            <p style="margin-top: 2rem; opacity: 0.8;">&copy; 2024 University Store. Tous droits réservés.</p>
-        </div>
-    </footer>
-
-    <!-- Login Modal -->
-    <div id="loginModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeLoginModal()">&times;</span>
-            <div class="login-form">
-                <h3 style="text-align: center; font-size: 2rem; margin-bottom: 2rem; background: linear-gradient(45deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Connexion Admin</h3>
-                <div class="form-group">
-                    <label for="username">Nom d'utilisateur</label>
-                    <input type="text" id="username" required placeholder="Entrez votre nom d'utilisateur" autocomplete="username">
-                </div>
-                <div class="form-group">
-                    <label for="password">Mot de passe</label>
-                    <input type="password" id="password" required placeholder="Entrez votre mot de passe" autocomplete="current-password">
-                </div>
-                <button class="submit-btn" onclick="login()">Se connecter</button>
-                <div id="loginError" class="error-message" style="margin-top: 1rem; display: none;"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Order Modal -->
-    <div id="orderModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeOrderModal()">&times;</span>
-            <div id="orderForm">
-                <h3 style="text-align: center; font-size: 2rem; margin-bottom: 2rem; background: linear-gradient(45deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">📦 Passer une commande</h3>
-                <form id="orderFormElement">
-                    <div class="form-group">
-                        <label for="orderName">Nom</label>
-                        <input type="text" id="orderName" required placeholder="Votre nom" autocomplete="family-name">
-                    </div>
-                    <div class="form-group">
-                        <label for="orderPrenom">Prénom</label>
-                        <input type="text" id="orderPrenom" required placeholder="Votre prénom" autocomplete="given-name">
-                    </div>
-                    <div class="form-group">
-                        <label for="orderPhone">Numéro de téléphone</label>
-                        <input type="tel" id="orderPhone" required placeholder="07XX XX XX XX" autocomplete="tel">
-                    </div>
-                    <div class="form-group">
-                        <label for="orderWilaya">Wilaya</label>
-                        <select id="orderWilaya" required onchange="updateCommunes()">
-                            <option value="">Sélectionner une wilaya</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="orderCommune">Commune</label>
-                        <select id="orderCommune" required>
-                            <option value="">Sélectionner une commune</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="submit-btn">Confirmer la commande</button>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Dashboard -->
-    <div class="dashboard" id="dashboard">
-        <div class="dashboard-header">
-            <h2 style="font-size: 2.5rem;">🎛️ Dashboard Admin</h2>
-            <button class="delete-btn" onclick="logout()">Déconnexion</button>
-        </div>
-
-        <div class="dashboard-nav">
-            <button class="dash-nav-btn active" onclick="showDashSection('products', event)">📦 Produits</button>
-            <button class="dash-nav-btn" onclick="showDashSection('orders', event)">📋 Commandes</button>
-            <button class="dash-nav-btn" onclick="showDashSection('security', event)">🔒 Sécurité</button>
-            <button class="dash-nav-btn" onclick="showDashSection('backup', event)">💾 Sauvegarde</button>
-            <button class="dash-nav-btn" onclick="showDashSection('analytics', event)">📊 Statistiques</button>
-        </div>
-
-        <!-- Products Section -->
-        <div class="dashboard-section active" id="productsSection">
-            <div class="add-product-form">
-                <h3 style="font-size: 1.8rem; margin-bottom: 2rem;">Ajouter un nouveau produit</h3>
-                <form id="addProductForm">
-                    <div class="form-group">
-                        <label for="productName">Nom du produit</label>
-                        <input type="text" id="productName" required placeholder="Ex: Chemise Oxford Premium">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="productPrice">Prix (DZD)</label>
-                        <input type="number" id="productPrice" required placeholder="Ex: 2500" min="1" max="999999">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="productCategory">Catégorie</label>
-                        <select id="productCategory" required>
-                            <option value="">Sélectionner une catégorie</option>
-                            <option value="habillement">👔 Habillement homme</option>
-                            <option value="electronique">🎧 Accessoires électroniques</option>
-                            <option value="accessoires">✨ Accessoires</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="productDescription">Description</label>
-                        <textarea id="productDescription" rows="3" required placeholder="Description détaillée du produit"></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="productEmoji">Emoji (optionnel)</label>
-                        <input type="text" id="productEmoji" placeholder="Ex: 👔, 🎧, ⌚">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="productImage">Image du produit</label>
-                        <input type="file" id="productImage" accept="image/*" onchange="previewImage()">
-                        <img id="imagePreview" style="display: none; max-width: 200px; margin-top: 1rem; border-radius: 8px;">
-                    </div>
-                    
-                    <button type="submit" class="submit-btn">Ajouter le produit</button>
-                </form>
-            </div>
-
-            <div class="products-list">
-                <h3 style="font-size: 1.8rem; margin-bottom: 2rem;">Produits existants</h3>
-                <div id="productsList"></div>
-            </div>
-        </div>
-
-        <!-- Orders Section -->
-        <div class="dashboard-section" id="ordersSection">
-            <div class="orders-section">
-                <h3 style="font-size: 1.8rem; margin-bottom: 2rem;">Commandes récentes</h3>
-                <div id="ordersList"></div>
-            </div>
-        </div>
-
-        <!-- Security Section -->
-        <div class="dashboard-section" id="securitySection">
-            <div class="add-product-form">
-                <h3 style="font-size: 1.8rem; margin-bottom: 2rem;">🔒 Tableau de Bord Sécurité</h3>
-                <div id="securityStats"></div>
-                <div id="securityLogs" style="margin-top: 2rem;"></div>
-            </div>
-        </div>
-
-        <!-- Backup Section -->
-        <div class="dashboard-section" id="backupSection">
-            <div class="add-product-form">
-                <h3 style="font-size: 1.8rem; margin-bottom: 2rem;">💾 Gestion des Sauvegardes</h3>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-                    <div style="background: rgba(39, 174, 96, 0.1); padding: 2rem; border-radius: 12px; border: 1px solid rgba(39, 174, 96, 0.3);">
-                        <h4 style="margin-bottom: 1rem; color: #2ecc71;">🔽 Créer une Sauvegarde</h4>
-                        <p style="margin-bottom: 1rem; opacity: 0.8;">Exporte toutes vos données (produits et commandes) dans un fichier JSON.</p>
-                        <button class="finalize-btn" onclick="backupManager.createBackup()" style="width: 100%;">
+<!-- Animated Background -->
+<div class="bg-animation"></div>
+<div class="particles" id="particles"></div>
+<!-- Header -->
+<header class="header" id="header">
+<nav class="nav">
+<div class="logo">🎓 University Store</div>
+<button class="mobile-menu" onclick="toggleMobileMenu()">
+<span></span>
+<span></span>
+<span></span>
+</button>
+<ul class="nav-links" id="navLinks">
+<li><a href="#accueil">Accueil</a></li>
+<li><a href="#produits">Produits</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
+<button class="admin-btn" onclick="showLoginModal()">
+<span>connexion</span>
+</button>
+</nav>
+</header>
+<!-- Main Content -->
+<main class="main-content" id="mainContent">
+<!-- Hero Section -->
+<section class="hero" id="accueil">
+<h1>🎓 University Store</h1>
+<p>Ton style, ta technologie. Découvrez notre collection d'habillement homme tendance et d'accessoires électroniques pratiques.</p>
+<p style="font-size: 1rem; opacity: 0.8;">✨ Qualité garantie – Prix étudiés pour les étudiants algériens</p>
+<button class="cta-button" onclick="scrollToProducts()">
+<span>Découvrir nos produits →</span>
+</button>
+</section>
+<!-- Products Section -->
+<section class="products" id="produits">
+<div class="container">
+<h2 class="section-title scroll-reveal">Nos Produits Premium</h2>
+<div class="product-grid" id="productGrid">
+<!-- Les produits seront ajoutés dynamiquement -->
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="footer" id="contact">
+<div class="footer-info">
+<p style="font-size: 1.2rem; margin-bottom: 1rem;">📍 Disponible partout en Algérie</p>
+<p>🚚 Livraison rapide et sécurisée</p>
+<p>💎 Qualité premium garantie</p>
+<p style="margin-top: 2rem; opacity: 0.8;">© 2024 University Store. Tous droits réservés.</p>
+</div>
+</footer>
+<!-- Login Modal -->
+<div class="modal" id="loginModal">
+<div class="modal-content">
+<span class="close" onclick="closeLoginModal()">×</span>
+<div class="login-form">
+<h3 style="text-align: center; font-size: 2rem; margin-bottom: 2rem; background: linear-gradient(45deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Connexion</h3>
+<div class="form-group">
+<label for="username">Nom d'utilisateur</label>
+<input autocomplete="username" id="username" placeholder="Entrez votre nom d'utilisateur" required="" type="text"/>
+</div>
+<div class="form-group">
+<label for="password">Mot de passe</label>
+<input autocomplete="current-password" id="password" placeholder="Entrez votre mot de passe" required="" type="password"/>
+</div>
+<button class="submit-btn" onclick="login()">Se connecter</button>
+<div class="error-message" id="loginError" style="margin-top: 1rem; display: none;"></div>
+</div>
+</div>
+</div>
+<!-- Order Modal -->
+<div class="modal" id="orderModal">
+<div class="modal-content">
+<span class="close" onclick="closeOrderModal()">×</span>
+<div id="orderForm">
+<h3 style="text-align: center; font-size: 2rem; margin-bottom: 2rem; background: linear-gradient(45deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">📦 Passer une commande</h3>
+<form id="orderFormElement">
+<div class="form-group">
+<label for="orderName">Nom</label>
+<input autocomplete="family-name" id="orderName" placeholder="Votre nom" required="" type="text"/>
+</div>
+<div class="form-group">
+<label for="orderPrenom">Prénom</label>
+<input autocomplete="given-name" id="orderPrenom" placeholder="Votre prénom" required="" type="text"/>
+</div>
+<div class="form-group">
+<label for="orderPhone">Numéro de téléphone</label>
+<input autocomplete="tel" id="orderPhone" placeholder="07XX XX XX XX" required="" type="tel"/>
+</div>
+<div class="form-group">
+<label for="orderWilaya">Wilaya</label>
+<select id="orderWilaya" onchange="updateCommunes()" required="">
+<option value="">Sélectionner une wilaya</option>
+</select>
+</div>
+<div class="form-group">
+<label for="orderCommune">Commune</label>
+<select id="orderCommune" required="">
+<option value="">Sélectionner une commune</option>
+</select>
+</div>
+<button class="submit-btn" type="submit">Confirmer la commande</button>
+<div id="orderTotalPrice" style="margin-top:1rem; font-size:1.2rem; font-weight:bold; color:#000; text-align:center;">💰 Total: 0 DZD</div></form>
+</div>
+</div>
+</div>
+<!-- Dashboard -->
+<div class="dashboard" id="dashboard">
+<div class="dashboard-header">
+<h2 style="font-size: 2.5rem;">🎛️ Dashboard Admin</h2>
+<button class="delete-btn" onclick="logout()">Déconnexion</button>
+</div>
+<div class="dashboard-nav">
+<button class="dash-nav-btn active" onclick="showDashSection('products', event)">📦 Produits</button>
+<button class="dash-nav-btn" onclick="showDashSection('orders', event)">📋 Commandes</button>
+<button class="dash-nav-btn" onclick="showDashSection('security', event)">🔒 Sécurité</button>
+<button class="dash-nav-btn" onclick="showDashSection('backup', event)">💾 Sauvegarde</button>
+<button class="dash-nav-btn" onclick="showDashSection('analytics', event)">📊 Statistiques</button>
+</div>
+<!-- Products Section -->
+<div class="dashboard-section active" id="productsSection">
+<div class="add-product-form">
+<h3 style="font-size: 1.8rem; margin-bottom: 2rem;">Ajouter un nouveau produit</h3>
+<form id="addProductForm">
+<div class="form-group">
+<label for="productName">Nom du produit</label>
+<input id="productName" placeholder="Ex: Chemise Oxford Premium" required="" type="text"/>
+</div>
+<div class="form-group">
+<label for="productPrice">Prix (DZD)</label>
+<input id="productPrice" max="999999" min="1" placeholder="Ex: 2500" required="" type="number"/>
+</div>
+<div class="form-group">
+<label for="productCategory">Catégorie</label>
+<select id="productCategory" required="">
+<option value="">Sélectionner une catégorie</option>
+<option value="habillement">👔 Habillement homme</option>
+<option value="electronique">🎧 Accessoires électroniques</option>
+<option value="accessoires">✨ Accessoires</option>
+</select>
+</div>
+<div class="form-group">
+<label for="productDescription">Description</label>
+<textarea id="productDescription" placeholder="Description détaillée du produit" required="" rows="3"></textarea>
+</div>
+<div class="form-group">
+<label for="productEmoji">Emoji (optionnel)</label>
+<input id="productEmoji" placeholder="Ex: 👔, 🎧, ⌚" type="text"/>
+</div>
+<div class="form-group">
+<label for="productImage">Image du produit</label>
+<input accept="image/*" id="productImage" onchange="previewImage()" type="file"/>
+<img id="imagePreview" style="display: none; max-width: 200px; margin-top: 1rem; border-radius: 8px;"/>
+</div>
+<button class="submit-btn" type="submit">Ajouter le produit</button>
+</form>
+</div>
+<div class="products-list">
+<h3 style="font-size: 1.8rem; margin-bottom: 2rem;">Produits existants</h3>
+<div id="productsList"></div>
+</div>
+</div>
+<!-- Orders Section -->
+<div class="dashboard-section" id="ordersSection">
+<div class="orders-section">
+<h3 style="font-size: 1.8rem; margin-bottom: 2rem;">Commandes récentes</h3>
+<div id="ordersList"></div>
+</div>
+</div>
+<!-- Security Section -->
+<div class="dashboard-section" id="securitySection">
+<div class="add-product-form">
+<h3 style="font-size: 1.8rem; margin-bottom: 2rem;">🔒 Tableau de Bord Sécurité</h3>
+<div id="securityStats"></div>
+<div id="securityLogs" style="margin-top: 2rem;"></div>
+</div>
+</div>
+<!-- Backup Section -->
+<div class="dashboard-section" id="backupSection">
+<div class="add-product-form">
+<h3 style="font-size: 1.8rem; margin-bottom: 2rem;">💾 Gestion des Sauvegardes</h3>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+<div style="background: rgba(39, 174, 96, 0.1); padding: 2rem; border-radius: 12px; border: 1px solid rgba(39, 174, 96, 0.3);">
+<h4 style="margin-bottom: 1rem; color: #2ecc71;">🔽 Créer une Sauvegarde</h4>
+<p style="margin-bottom: 1rem; opacity: 0.8;">Exporte toutes vos données (produits et commandes) dans un fichier JSON.</p>
+<button class="finalize-btn" onclick="backupManager.createBackup()" style="width: 100%;">
                             Télécharger Sauvegarde
                         </button>
-                    </div>
-                    
-                    <div style="background: rgba(52, 152, 219, 0.1); padding: 2rem; border-radius: 12px; border: 1px solid rgba(52, 152, 219, 0.3);">
-                        <h4 style="margin-bottom: 1rem; color: #3498db;">🔼 Restaurer Sauvegarde</h4>
-                        <p style="margin-bottom: 1rem; opacity: 0.8;">Importe des données depuis un fichier de sauvegarde.</p>
-                        <input type="file" id="restoreFile" accept=".json" style="margin-bottom: 1rem; width: 100%;">
-                        <button class="submit-btn" onclick="handleRestore()" style="width: 100%;">
+</div>
+<div style="background: rgba(52, 152, 219, 0.1); padding: 2rem; border-radius: 12px; border: 1px solid rgba(52, 152, 219, 0.3);">
+<h4 style="margin-bottom: 1rem; color: #3498db;">🔼 Restaurer Sauvegarde</h4>
+<p style="margin-bottom: 1rem; opacity: 0.8;">Importe des données depuis un fichier de sauvegarde.</p>
+<input accept=".json" id="restoreFile" style="margin-bottom: 1rem; width: 100%;" type="file"/>
+<button class="submit-btn" onclick="handleRestore()" style="width: 100%;">
                             Restaurer Données
                         </button>
-                    </div>
-                </div>
-                
-                <div style="margin-top: 2rem; padding: 1rem; background: rgba(241, 196, 15, 0.1); border-radius: 8px; border-left: 4px solid #f1c40f;">
-                    <strong>⚠️ Important:</strong>
-                    <ul style="margin-top: 0.5rem; margin-left: 1rem; opacity: 0.9;">
-                        <li>Les sauvegardes automatiques sont créées toutes les heures</li>
-                        <li>La restauration remplace toutes les données actuelles</li>
-                        <li>Vérifiez toujours l'intégrité du fichier avant restauration</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- Analytics Section -->
-        <div class="dashboard-section" id="analyticsSection">
-            <div class="add-product-form">
-                <h3 style="font-size: 1.8rem; margin-bottom: 2rem;">📊 Statistiques du Magasin</h3>
-                <div id="analyticsContent"></div>
-            </div>
-        </div>
-    </div>
-
-    <script>
+</div>
+</div>
+<div style="margin-top: 2rem; padding: 1rem; background: rgba(241, 196, 15, 0.1); border-radius: 8px; border-left: 4px solid #f1c40f;">
+<strong>⚠️ Important:</strong>
+<ul style="margin-top: 0.5rem; margin-left: 1rem; opacity: 0.9;">
+<li>Les sauvegardes automatiques sont créées toutes les heures</li>
+<li>La restauration remplace toutes les données actuelles</li>
+<li>Vérifiez toujours l'intégrité du fichier avant restauration</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Analytics Section -->
+<div class="dashboard-section" id="analyticsSection">
+<div class="add-product-form">
+<h3 style="font-size: 1.8rem; margin-bottom: 2rem;">📊 Statistiques du Magasin</h3>
+<div id="analyticsContent"></div>
+</div>
+</div>
+</div>
+<script>
         // ========== ENHANCED SECURITY SYSTEM ==========
         
         // Security Configuration
         const SECURITY_CONFIG = {
             ADMIN_CREDENTIALS: {
-                username: '8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4',
-                password: 'a8b64babd0aca91a59bdbb7761b421d4f2bb38280d3a75ba0f21f2bebc45ab9d'
+                username: 'c2db64b7f08adc2226fe74ce748cb2a55e6e4f3e2c2fdd929960a3efd034f202',
+                password: 'bbc51dcc1c1d6800ff44f0f5b8e5b7431c533ed13e1dc92c4ce5fdced1488050'
             },
-            MAX_LOGIN_ATTEMPTS: 3,
-            LOCKOUT_DURATION: 15 * 60 * 1000,
+            MAX_LOGIN_ATTEMPTS: 5,
+            LOCKOUT_DURATION: 1 * 60 * 1000,
             SESSION_DURATION: 60 * 60 * 1000,
             TOKEN_REFRESH_INTERVAL: 30 * 60 * 1000
         };
 
         // Replace with your Google Apps Script Web App URL
-        const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID_HERE/exec';
+const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbysJZ2wpaUQ07e77b9FR_7U1-1lbjXoak_8tkZOyMRfyfqOzzefkdHQUzJYdNBed8mjQQ/exec';
 
         // Security Manager Class
         class SecurityManager {
@@ -2675,5 +2652,136 @@
         console.log('🛡️ Environment Security Enabled');
         
     </script>
-</body>
+<!-- =================== GOOGLE SHEETS INTEGRATION =================== -->
+<script>
+const SHEETS_CONFIG = {
+    PRODUCTS_URL: 'https://script.google.com/macros/s/YOUR_PRODUCTS_SCRIPT_ID/exec',
+    ORDERS_URL: 'https://script.google.com/macros/s/YOUR_ORDERS_SCRIPT_ID/exec'
+};
+
+async function saveProductToSheets(product) {
+    try {
+        await fetch(SHEETS_CONFIG.PRODUCTS_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: 'add', data: product }),
+            mode: 'no-cors'
+        });
+        console.log('Product saved to sheets');
+        return true;
+    } catch (error) {
+        console.error('Error saving product:', error);
+        return false;
+    }
+}
+
+async function loadProductsFromSheets() {
+    try {
+        const response = await fetch(SHEETS_CONFIG.PRODUCTS_URL + '?action=get');
+        const data = await response.json();
+        if (data.success && data.products) {
+            products = data.products;
+            displayProducts();
+            displayProductsList();
+            console.log('Products loaded from sheets:', products.length);
+        }
+    } catch (error) {
+        console.error('Error loading products:', error);
+        loadProducts();
+    }
+}
+
+async function deleteProductFromSheets(productId) {
+    try {
+        await fetch(SHEETS_CONFIG.PRODUCTS_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: 'delete', id: productId }),
+            mode: 'no-cors'
+        });
+        console.log('Product deleted from sheets');
+    } catch (error) {
+        console.error('Error deleting product:', error);
+    }
+}
+
+async function loadOrdersFromSheets() {
+    try {
+        const response = await fetch(SHEETS_CONFIG.ORDERS_URL + '?action=get');
+        const data = await response.json();
+        if (data.success && data.orders) {
+            orders = data.orders;
+            displayOrdersList();
+            console.log('Orders loaded from sheets:', orders.length);
+        }
+    } catch (error) {
+        console.error('Error loading orders:', error);
+        loadOrders();
+    }
+}
+
+function startAutoSync() {
+    setInterval(async () => {
+        console.log('Auto-syncing data...');
+        await loadProductsFromSheets();
+        await loadOrdersFromSheets();
+    }, 5 * 60 * 1000);
+}
+
+window.addEventListener('load', async function () {
+    console.log('Loading data from Google Sheets...');
+    await loadProductsFromSheets();
+    await loadOrdersFromSheets();
+    startAutoSync();
+    console.log('Data loading complete');
+});
+</script>
+<script>
+// === CALCULATE TOTAL PRICE WITH DELIVERY ===
+function updateOrderTotalPrice(productPrice=0) {
+    const total = parseInt(productPrice || 0) + 500; // +500 DA delivery
+    const el = document.getElementById('orderTotalPrice');
+    if (el) el.textContent = `💰 Total: ${total} DZD (livraison incluse)`;
+}
+
+// Example: when showing order modal, call this with the product price
+// updateOrderTotalPrice(selectedProduct.price);
+</script><script>
+// ===== OPEN ORDER MODAL WITH TOTAL =====
+function openOrderModal(productId) {
+    // Find the product selected
+    currentOrderProduct = products.find(p => p.id === productId);
+
+    // Show the order modal
+    document.getElementById('orderModal').style.display = 'block';
+
+    // Reset the form fields
+    document.getElementById('orderFormElement').reset();
+
+    // Update the total price automatically (product price + 500 DA)
+    if (currentOrderProduct) {
+        updateOrderTotalPrice(currentOrderProduct.price);
+    } else {
+        updateOrderTotalPrice(0);
+    }
+}
+</script><script>
+// ===== OPEN ORDER MODAL WITH TOTAL =====
+function openOrderModal(productId) {
+  // on récupère le produit
+  currentOrderProduct = products.find(p => p.id === productId);
+  if (!currentOrderProduct) return;
+
+  // afficher la modale
+  document.getElementById('orderModal').style.display = 'block';
+
+  // calcul du total
+  const livraison = 500;
+  const total = parseInt(currentOrderProduct.price || 0) + livraison;
+
+  // mise à jour de l’affichage
+  const el = document.getElementById('orderTotalPrice');
+  if (el) el.textContent = `💰 Total: ${total} DZD`;
+}
+</script></body>
 </html>
