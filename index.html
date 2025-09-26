@@ -1054,18 +1054,18 @@
 </div>
 <div class="form-group">
 <label for="orderWilaya">Wilaya</label>
-<select id="orderWilaya" onchange="updateCommunes()" required="">
-<option value="">Sélectionner une wilaya</option>
-</select>
+
 </div>
 <div class="form-group">
 <label for="orderCommune">Commune</label>
-<select id="orderCommune" required="">
-<option value="">Sélectionner une commune</option>
-</select>
+
 </div>
-<button class="submit-btn" type="submit">Confirmer la commande</button>
-<div id="orderTotalPrice" style="margin-top:1rem; font-size:1.2rem; font-weight:bold; color:#000; text-align:center;">💰 Total: 0 DZD</div></form>
+<div id="orderTotalPrice" style="margin-top:1rem; font-size:1.2rem; font-weight:bold; color:#000; text-align:center;">💰 Total: 0 DZD</div>
+
+
+
+
+</form>
 </div>
 </div>
 </div>
@@ -2783,5 +2783,46 @@ function openOrderModal(productId) {
   const el = document.getElementById('orderTotalPrice');
   if (el) el.textContent = `💰 Total: ${total} DZD`;
 }
+</script><script>
+// ===== OPEN ORDER MODAL WITH TOTAL =====
+function openOrderModal(productId) {
+  currentOrderProduct = products.find(p => p.id === productId);
+  if (!currentOrderProduct) return;
+
+  document.getElementById('orderModal').style.display = 'block';
+  document.getElementById('orderFormElement').reset();
+
+  const total = parseInt(currentOrderProduct.price || 0) + 500;
+  document.getElementById('orderTotalPrice').textContent = `💰 Total: ${total} DZD`;
+}
+
+// Envoi des données de commande à Google Sheets
+document.getElementById('orderFormElement').addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  const orderData = {
+    name: document.getElementById('customerName') ? document.getElementById('customerName').value : '',
+    phone: document.getElementById('phone') ? document.getElementById('phone').value : '',
+    wilaya: document.getElementById('wilaya').value,
+    commune: document.getElementById('commune').value,
+    product: currentOrderProduct ? currentOrderProduct.name : '',
+    price: currentOrderProduct ? currentOrderProduct.price : 0,
+    total: currentOrderProduct ? parseInt(currentOrderProduct.price || 0) + 500 : 0,
+    date: new Date().toLocaleString()
+  };
+
+  try {
+    const response = await fetch(GOOGLE_APPS_SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(orderData)
+    });
+    alert('Commande envoyée avec succès !');
+    document.getElementById('orderModal').style.display = 'none';
+  } catch (err) {
+    console.error(err);
+    alert('Erreur lors de l\'envoi de la commande');
+  }
+});
 </script></body>
 </html>
